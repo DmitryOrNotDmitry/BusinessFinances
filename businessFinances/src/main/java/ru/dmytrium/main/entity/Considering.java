@@ -6,6 +6,7 @@ import lombok.Data;
 @Entity
 @Table(name = "considering")
 @Data
+@IdClass(ConsideringId.class)
 public class Considering {
 
     @Id
