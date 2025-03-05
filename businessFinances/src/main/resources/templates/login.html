@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Финансы бизнеса</title>
+    <title>Вход</title>
     <style>
         body {
             margin: 0;
@@ -12,26 +12,35 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url('/images/main_background.jpg') no-repeat center center/cover;
             font-family: Arial, sans-serif;
         }
         .container {
-            background: rgba(16, 64, 59, 0.95);
+            background: rgba(16, 64, 59, 0.8);
             padding: 20px;
             border-radius: 15px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
         }
         h1 {
             color: #BFBFBF;
-            font-size: 32px;
-            margin-bottom: 20px;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #8AA6A3;
+            border-radius: 5px;
+            background: #BFBFBF;
+            color: #10403B;
         }
         .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
-            font-size: 18px;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -44,25 +53,16 @@
         .btn-login:hover {
             background: #10403B;
         }
-        .btn-register {
-            background: #8AA6A3;
-            color: #10403B;
-        }
-        .btn-register:hover {
-            background: #4C5958;
-        }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>Финансы бизнеса</h1>
-    <a href="/login">
-        <button class="btn btn-login">Войти</button>
-    </a>
-    <a href="/register">
-        <button class="btn btn-register">Регистрация</button>
-    </a>
+    <h1>Вход</h1>
+    <form action="/login" method="post" th:object="${user_login}">
+        <input type="text" placeholder="Логин" required th:field="*{name}">
+        <input type="password" placeholder="Пароль" required th:field="*{password}">
+        <button type="submit" class="btn btn-login">Войти</button>
+    </form>
 </div>
 </body>
 </html>
-

@@ -27,13 +27,18 @@ public class IndexController {
 
     @GetMapping("/")
     public String index() {
-        System.out.println(userRepository.findAll().size());
-        System.out.println(agentRepository.findAll().size());
-        System.out.println(consideringRepository.findAll().size());
-        for (Business b : businessRepository.findAll()) {
-            System.out.println(b.getAuthor());
-        }
+//        System.out.println(userRepository.findAll().size());
+//        System.out.println(agentRepository.findAll().size());
+//        System.out.println(consideringRepository.findAll().size());
+//        for (Business b : businessRepository.findAll()) {
+//            System.out.println(b.getAuthor());
+//        }
         return "index";
+    }
+
+    @GetMapping("mainContent")
+    public String main() {
+        return "mainContent";
     }
 
 }
