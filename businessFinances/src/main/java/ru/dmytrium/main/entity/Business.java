@@ -11,6 +11,7 @@ import java.util.Date;
 public class Business {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "business_id")
     private Long businessId;
 

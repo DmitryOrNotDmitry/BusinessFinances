@@ -11,6 +11,7 @@ import java.util.Date;
 public class InvolveBusiness {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "involve_code")
     private Long involveCode;
 

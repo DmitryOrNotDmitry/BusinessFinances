@@ -11,6 +11,7 @@ import java.util.Date;
 public class Obligation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "obligation_id")
     private Long obligationId;
 
