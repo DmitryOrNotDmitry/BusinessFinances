@@ -10,6 +10,7 @@
             padding: 0;
             display: flex;
             justify-content: center;
+            flex-flow: column;
             align-items: center;
             height: 100vh;
             font-family: Arial, sans-serif;
@@ -53,16 +54,21 @@
         .btn-login:hover {
             background: #10403B;
         }
+        .additionRef {
+            margin-top: 10px;
+            color: #10403B;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Вход</h1>
     <form action="/login" method="post" th:object="${user_login}">
-        <input type="text" placeholder="Логин" required th:field="*{name}">
-        <input type="password" placeholder="Пароль" required th:field="*{password}">
+        <input type="text" placeholder="Логин" required th:field="*{name}" value="user">
+        <input type="password" placeholder="Пароль" required th:field="*{password}" value="1">
         <button type="submit" class="btn btn-login">Войти</button>
     </form>
 </div>
+<a href="/register" class="additionRef">Регистрация</a>
 </body>
 </html>
