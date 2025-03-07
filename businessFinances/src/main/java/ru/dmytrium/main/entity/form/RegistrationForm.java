@@ -1,4 +1,4 @@
-package ru.dmytrium.main.entity;
+package ru.dmytrium.main.entity.form;
 
 import lombok.Data;
 

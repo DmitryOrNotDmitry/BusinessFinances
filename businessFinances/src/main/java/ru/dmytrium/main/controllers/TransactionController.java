@@ -23,7 +23,7 @@ public class TransactionController {
 
     @PostMapping
     public String transactionCreate(@ModelAttribute Transaction transaction,
-                                    @SessionAttribute(name = "selectedBusinessId") Business selectedBusiness) {
+                                    @SessionAttribute(name = "selectedBusiness") Business selectedBusiness) {
 
         transaction.setBusiness(selectedBusiness);
         transactionRepository.save(transaction);

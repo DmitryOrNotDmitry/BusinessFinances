@@ -49,12 +49,15 @@
             background-color: #f4f4f4;
         }
         .form-container {
-            margin-top: 20px;
             padding: 20px;
             background-color: #f9f9f9;
             border-radius: 5px;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
         }
         .form-container form {
+            max-width: 300px;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -76,16 +79,46 @@
         .form-container button:hover {
             background-color: #0f5a47;
         }
+        .delete_button {
+        background: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: 0.2s;
+        }
+
+        .delete_button:hover {
+            background: #cc0000;
+        }
+        td:nth-child(3), th:nth-child(3) {
+            width: 150px;
+        }
+
     </style>
 </head>
 <body>
 <div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>
 
 <div class="contentContainer">
-    <h1>Информация о бизнесе</h1>
+    <h1 th:text="'Информация о бизнесе: ' + ${business.businessName}"></h1>
 
     <div class="business-info">
-        <h2 th:text="${business.name}">Название бизнеса</h2>
+        <div class="form-container">
+            <h3>Добавить участника</h3>
+            <form th:action="@{/businesses} + '/' + ${business.businessId} + '/participant'" method="post" th:object="${addRoleTraits}">
+                <label for="login">Логин пользователя:</label>
+                <input type="text" th:field="*{login}" placeholder="Введите логин" required>
+
+                <label for="role">Роль:</label>
+                <select id="role" name="role" th:field="*{role}" value="2" required>
+                    <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
+                </select>
+
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
 
         <div class="table-container">
             <h3>Список участников</h3>
@@ -94,33 +127,22 @@
                 <tr>
                     <th>Имя</th>
                     <th>Роль</th>
+                    <th>Действие</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="participant : ${business.participants}">
-                    <td th:text="${participant.name}"></td>
-                    <td th:text="${participant.role}"></td>
+                <tr th:each="participant : ${participants}">
+                    <td th:text="${participant.user.name}"></td>
+                    <td th:text="${participant.role.roleName}"></td>
+                    <td>
+                        <form th:action="@{/businesses} + '/' + ${business.businessId} + '/participant/delete'" method="post">
+                            <input type="hidden" name="involveCode" th:value="${participant.involveCode}">
+                            <button class="delete_button" type="submit">Удалить</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
-        </div>
-
-        <div class="form-container">
-            <h3>Добавить участника</h3>
-            <form th:action="@{/businesses/addParticipant}" method="post">
-                <input type="hidden" name="businessId" th:value="${business.id}">
-                <label for="username">Логин пользователя:</label>
-                <input type="text" id="username" name="username" placeholder="Введите логин" required>
-
-                <label for="role">Роль:</label>
-                <select id="role" name="role" required>
-                    <option value="OWNER">Владелец</option>
-                    <option value="MANAGER">Менеджер</option>
-                    <option value="EMPLOYEE">Сотрудник</option>
-                </select>
-
-                <button type="submit">Добавить</button>
-            </form>
         </div>
     </div>
 </div>

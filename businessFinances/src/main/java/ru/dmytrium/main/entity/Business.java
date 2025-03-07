@@ -10,6 +10,13 @@ import java.util.Date;
 @Data
 public class Business {
 
+    public Business() {
+    }
+
+    public Business(Long businessId) {
+        this.businessId = businessId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "business_id")
