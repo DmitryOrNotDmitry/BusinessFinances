@@ -12,6 +12,7 @@ import java.util.Date;
 public class Transaction {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_code")
     private Long transactionCode;
 

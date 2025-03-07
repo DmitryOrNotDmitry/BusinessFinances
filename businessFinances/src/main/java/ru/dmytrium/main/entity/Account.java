@@ -11,6 +11,7 @@ import java.util.Date;
 public class Account {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_code")
     private Long accountCode;
 

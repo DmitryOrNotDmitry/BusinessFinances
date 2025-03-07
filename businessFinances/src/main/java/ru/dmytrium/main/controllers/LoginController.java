@@ -3,10 +3,7 @@ package ru.dmytrium.main.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.dmytrium.main.entity.User;
 import ru.dmytrium.main.repo.UserRepository;
 
@@ -14,6 +11,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("login")
+@SessionAttributes("userId")
 public class LoginController {
 
     @Autowired
@@ -21,12 +19,15 @@ public class LoginController {
 
     @GetMapping
     public String login(Model model) {
-        model.addAttribute("user_login", new User());
+        User user = new User();
+        user.setName("user"); // TODO
+        user.setPassword("1");
+        model.addAttribute("user_login", user);
         return "login";
     }
 
     @PostMapping
-    public String loginConfirm(@ModelAttribute(name = "user_login") User userLogin) {
+    public String loginConfirm(@ModelAttribute(name = "user_login") User userLogin, Model model) {
         Optional<User> userFromDB = userRepository.findByName(userLogin.getName());
 
         if (userFromDB.isEmpty()) {
@@ -37,9 +38,9 @@ public class LoginController {
             return "login";
         }
 
-        return "redirect:/mainContent";
+        model.addAttribute("userId", userFromDB.get().getUserId());
+
+        return "redirect:/businesses";
     }
-
-
 
 }

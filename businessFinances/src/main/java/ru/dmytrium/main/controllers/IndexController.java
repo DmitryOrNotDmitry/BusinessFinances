@@ -13,32 +13,9 @@ import ru.dmytrium.main.repo.UserRepository;
 @Controller
 public class IndexController {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private AgentRepository agentRepository;
-
-    @Autowired
-    private ConsideringRepository consideringRepository;
-
-    @Autowired
-    private BusinessRepository businessRepository;
-
     @GetMapping("/")
     public String index() {
-//        System.out.println(userRepository.findAll().size());
-//        System.out.println(agentRepository.findAll().size());
-//        System.out.println(consideringRepository.findAll().size());
-//        for (Business b : businessRepository.findAll()) {
-//            System.out.println(b.getAuthor());
-//        }
         return "index";
-    }
-
-    @GetMapping("mainContent")
-    public String main() {
-        return "mainContent";
     }
 
 }
