@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Денежный поток бизнеса</title>
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebarContainer {
+            width: 15%;
+            height: 100%;
+        }
+        .contentContainer {
+            width: 85%;
+            height: 100%;
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #10403B;
+            background: #BFBFBF;
+            margin: 0;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .report-container {
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>
+
+<div class="contentContainer">
+    <h1>Отчет о денежном потоке</h1>
+
+    <div class="report-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Описание</th>
+                <th>Приход</th>
+                <th>Расход</th>
+                <th>Баланс</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transaction : ${cashflowReport}">
+                <td th:text="${transaction.date}"></td>
+                <td th:text="${transaction.description}"></td>
+                <td th:text="${transaction.income}"></td>
+                <td th:text="${transaction.expense}"></td>
+                <td th:text="${transaction.balance}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать обязательство</title>
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebarContainer {
+            width: 15%;
+            height: 100%;
+        }
+        .contentContainer {
+            width: 85%;
+            height: 100%;
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #10403B;
+            background: #BFBFBF;
+            margin: 0;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .form-container {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            height: auto;
+            justify-content: space-between;
+        }
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .form-input-container {
+            display: flex;
+            flex-flow: row;
+            width: 300px;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .form-input-container label {
+            font-size: 14px;
+            color: #333;
+            margin-right: 6px;
+        }
+        .form-input-container input, .form-input-container select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+        .transaction-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #127369;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .form-container button:hover {
+            background-color: #0f5a47;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>
+
+<div class="contentContainer">
+    <h1>Создать обязательство</h1>
+
+    <div class="form-container">
+        <form th:action="@{/obligations}" method="post" th:object="${newObligation}">
+            <div class="form-input-container">
+                <label for="type">Тип</label>
+                <input type="text" id="type" th:field="*{type}" placeholder="Введите тип" required>
+            </div>
+            <div class="form-input-container">
+                <label for="description">Описание</label>
+                <input type="text" id="description" th:field="*{description}" placeholder="Введите описание" required>
+            </div>
+            <div class="transaction-list" id="transactionList">
+                <label>Добавить транзакции:</label>
+                <select th:field="*{transactions}" multiple>
+                    <option th:each="transaction : ${transactions}" th:value="${transaction.id}" th:text="${transaction.name}"></option>
+                </select>
+            </div>
+            <button type="submit">Создать</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

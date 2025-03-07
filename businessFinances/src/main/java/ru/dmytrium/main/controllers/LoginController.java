@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("login")
-@SessionAttributes("userId")
+@SessionAttributes("user")
 public class LoginController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class LoginController {
             return "login";
         }
 
-        model.addAttribute("userId", userFromDB.get().getUserId());
+        model.addAttribute("user", userFromDB.get());
 
         return "redirect:/businesses";
     }

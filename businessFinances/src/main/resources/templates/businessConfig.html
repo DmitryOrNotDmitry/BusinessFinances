@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Конфигурация бизнеса</title>
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebarContainer {
+            width: 15%;
+            height: 100%;
+        }
+        .contentContainer {
+            width: 85%;
+            height: 100%;
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #10403B;
+            background: #BFBFBF;
+            margin: 0;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .form-input-container {
+            display: flex;
+            flex-flow: row;
+            width: 300px;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .form-input-container label {
+            font-size: 14px;
+            color: #333;
+            margin-right: 6px;
+        }
+        .form-input-container input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #127369;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0f5a47;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>
+<div class="contentContainer">
+    <h1>Конфигурация бизнеса</h1>
+
+    <!-- Добавление контрагента -->
+    <section>
+        <h2>Добавить контрагента</h2>
+        <div class="form-container">
+            <form th:action="@{/agents}" method="post" th:object="${newAgent}">
+                <div class="form-input-container">
+                    <label for="agentName">Имя контрагента</label>
+                    <input type="text" id="agentName" th:field="*{agentName}" required>
+                </div>
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+            </tr>
+            <tr th:each="agent : ${agents}">
+                <td th:text="${agent.id}"></td>
+                <td th:text="${agent.agentName}"></td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- Добавление счета -->
+    <section>
+        <h2>Добавить счет</h2>
+        <div class="form-container">
+            <form th:action="@{/accounts}" method="post" th:object="${newAccount}">
+                <div class="form-input-container">
+                    <label for="bankName">Банк</label>
+                    <input type="text" id="bankName" th:field="*{bankName}" required>
+                </div>
+                <div class="form-input-container">
+                    <label for="accountName">Имя счета</label>
+                    <input type="text" id="accountName" th:field="*{accountName}" required>
+                </div>
+                <div class="form-input-container">
+                    <label for="description">Описание</label>
+                    <input type="text" id="description" th:field="*{description}">
+                </div>
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Банк</th>
+                <th>Имя счета</th>
+                <th>Описание</th>
+            </tr>
+            <tr th:each="account : ${accounts}">
+                <td th:text="${account.id}"></td>
+                <td th:text="${account.bankName}"></td>
+                <td th:text="${account.accountName}"></td>
+                <td th:text="${account.description}"></td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- Добавление категории транзакций -->
+    <section>
+        <h2>Добавить категорию транзакций</h2>
+        <div class="form-container">
+            <form th:action="@{/categories}" method="post" th:object="${newCategory}">
+                <div class="form-input-container">
+                    <label for="categoryName">Название категории</label>
+                    <input type="text" id="categoryName" th:field="*{categoryName}" required>
+                </div>
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+            </tr>
+            <tr th:each="category : ${categories}">
+                <td th:text="${category.id}"></td>
+                <td th:text="${category.categoryName}"></td>
+            </tr>
+        </table>
+    </section>
+</div>
+</body>
+</html>

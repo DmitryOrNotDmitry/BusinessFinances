@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о бизнесе</title>
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebarContainer {
+            width: 15%;
+            height: 100%;
+        }
+        .contentContainer {
+            width: 85%;
+            height: 100%;
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #10403B;
+            background: #BFBFBF;
+            margin: 0;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .business-info {
+            padding: 20px;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .form-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .form-container label {
+            font-weight: bold;
+        }
+        .form-container input, .form-container select, .form-container button {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container button {
+            background-color: #127369;
+            color: white;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #0f5a47;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>
+
+<div class="contentContainer">
+    <h1>Информация о бизнесе</h1>
+
+    <div class="business-info">
+        <h2 th:text="${business.name}">Название бизнеса</h2>
+
+        <div class="table-container">
+            <h3>Список участников</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Роль</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="participant : ${business.participants}">
+                    <td th:text="${participant.name}"></td>
+                    <td th:text="${participant.role}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-container">
+            <h3>Добавить участника</h3>
+            <form th:action="@{/businesses/addParticipant}" method="post">
+                <input type="hidden" name="businessId" th:value="${business.id}">
+                <label for="username">Логин пользователя:</label>
+                <input type="text" id="username" name="username" placeholder="Введите логин" required>
+
+                <label for="role">Роль:</label>
+                <select id="role" name="role" required>
+                    <option value="OWNER">Владелец</option>
+                    <option value="MANAGER">Менеджер</option>
+                    <option value="EMPLOYEE">Сотрудник</option>
+                </select>
+
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
