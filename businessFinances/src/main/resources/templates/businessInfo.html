@@ -1,150 +1,98 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Информация о бизнесе</title>
-    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            height: 100vh;
-        }
-        .sidebarContainer {
-            width: 15%;
-            height: 100%;
-        }
-        .contentContainer {
-            width: 85%;
-            height: 100%;
-            background-color: #FFFFFF;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-            color: #10403B;
-            background: #BFBFBF;
-            margin: 0;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        .business-info {
-            padding: 20px;
-        }
-        .table-container {
-            margin-top: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .form-container {
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            display: flex;
-            flex-flow: column;
-            align-items: center;
-        }
-        .form-container form {
-            max-width: 300px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .form-container label {
-            font-weight: bold;
-        }
-        .form-container input, .form-container select, .form-container button {
-            padding: 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .form-container button {
-            background-color: #127369;
-            color: white;
-            cursor: pointer;
-        }
-        .form-container button:hover {
-            background-color: #0f5a47;
-        }
-        .delete_button {
-        background: #ff4d4d;
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+  <style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        height: 100vh;
+    }
+    .sidebarContainer {
+        width: 15%;
+        height: 100%;
+    }
+    .contentContainer {
+        width: 85%;
+        height: 100%;
+        background-color: #FFFFFF;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+        text-align: center;
+        color: #10403B;
+        background: #BFBFBF;
+        margin: 0;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+    .form-container {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        height: auto;
+        justify-content: space-between;
+    }
+    .form-container form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .form-input-container {
+        display: flex;
+        flex-flow: row;
+        width: 300px;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .form-input-container label {
+        font-size: 14px;
+        color: #333;
+        margin-right: 6px;
+    }
+    .form-input-container input {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .form-container button {
+        padding: 10px 20px;
+        background-color: #127369;
         color: white;
         border: none;
-        padding: 5px 10px;
-        cursor: pointer;
         border-radius: 4px;
-        transition: 0.2s;
-        }
-
-        .delete_button:hover {
-            background: #cc0000;
-        }
-        td:nth-child(3), th:nth-child(3) {
-            width: 150px;
-        }
-
-    </style>
+        cursor: pointer;
+        margin-top: auto;
+    }
+    .form-container button:hover {
+        background-color: #0f5a47;
+    }
+  </style>
 </head>
 <body>
 <div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>
 
 <div class="contentContainer">
-    <h1 th:text="'Информация о бизнесе: ' + ${business.businessName}"></h1>
+  <h1>Изменить название бизнеса</h1>
 
-    <div class="business-info">
-        <div class="form-container">
-            <h3>Добавить участника</h3>
-            <form th:action="@{/businesses} + '/' + ${business.businessId} + '/participant'" method="post" th:object="${addRoleTraits}">
-                <label for="login">Логин пользователя:</label>
-                <input type="text" th:field="*{login}" placeholder="Введите логин" required>
+  <div class="form-container">
+    <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/settings'}" method="post" th:object="${newBusinessSettings}">
+      <div class="form-input-container">
+        <label for="businessName">Название</label>
+        <input type="text" th:field="*{businessName}" placeholder="Введите новое название бизнеса" value="*{businessName}" required>
+      </div>
 
-                <label for="role">Роль:</label>
-                <select id="role" name="role" th:field="*{role}" value="2" required>
-                    <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
-                </select>
-
-                <button type="submit">Добавить</button>
-            </form>
-        </div>
-
-        <div class="table-container">
-            <h3>Список участников</h3>
-            <table>
-                <thead>
-                <tr>
-                    <th>Имя</th>
-                    <th>Роль</th>
-                    <th>Действие</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="participant : ${participants}">
-                    <td th:text="${participant.user.name}"></td>
-                    <td th:text="${participant.role.roleName}"></td>
-                    <td>
-                        <form th:action="@{/businesses} + '/' + ${business.businessId} + '/participant/delete'" method="post">
-                            <input type="hidden" name="involveCode" th:value="${participant.involveCode}">
-                            <button class="delete_button" type="submit">Удалить</button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+      <button type="submit">Сохранить изменения</button>
+    </form>
+  </div>
 </div>
 </body>
 </html>

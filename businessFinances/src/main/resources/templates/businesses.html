@@ -64,6 +64,17 @@
             align-items: center;
             justify-content: center;
         }
+        .business-role {
+            color: #3ee16c;
+            font-size: 12px;
+            opacity: 0.7;
+            align-self: flex-start;
+            padding-left: 10px;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
         .business-date {
             font-size: 12px;
             opacity: 0.7;
@@ -87,10 +98,11 @@
                 <div class="business-name">Создать новый</div>
             </div>
         </a>
-        <a th:each="business : ${businesses}" th:href="@{/businesses/} + ${business.businessId}">
-            <div  class="business-card">
-                <div class="business-name" th:text="${business.businessName}">Имя бизнес</div>
-                <div class="business-date" th:text="'Создан: ' + ${#dates.format(business.createdAt, 'dd.MM.yyyy')}">Дата создания</div>
+        <a th:each="involve : ${userInvolves}" th:href="@{/businesses/} + ${involve.business.businessId}">
+            <div class="business-card">
+                <div class="business-role" th:text="${involve.role}">Роль</div>
+                <div class="business-name" th:text="${involve.business.businessName}">Имя бизнес</div>
+                <div class="business-date" th:text="'Создан: ' + ${#dates.format(involve.business.createdAt, 'dd.MM.yyyy')}">Дата создания</div>
             </div>
         </a>
     </div>

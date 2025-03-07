@@ -17,6 +17,15 @@ public class Business {
         this.businessId = businessId;
     }
 
+    public Business clone() {
+        Business clone = new Business();
+        clone.businessId = this.businessId;
+        clone.businessName = this.businessName;
+        clone.author = this.author;
+        clone.createdAt = this.createdAt;
+        return clone;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "business_id")

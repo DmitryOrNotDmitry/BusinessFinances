@@ -13,9 +13,17 @@
 
   <ul>
     <li><a th:href="@{/businesses}">Бизнесы</a></li>
-    <li><a th:href="@{/configuration}">Конфигурация</a></li>
     <li><a th:href="@{/profile}">Профиль</a></li>
-    <li><a th:href="@{/faq}">FAQ</a></li>
+  </ul>
+
+  <div class="selBusinessName" th:if="${selectedBusiness}" th:text="${selectedBusiness.businessName}">Имя бизнеса</div>
+  <ul th:if="${selectedBusiness}">
+    <li>
+      <a th:href="@{/businesses/} + ${selectedBusiness.businessId} + '/settings'">Настройки</a>
+    </li>
+    <li>
+      <a th:href="@{/businesses/} + ${selectedBusiness.businessId} + '/participant'">Участники</a>
+    </li>
   </ul>
 </div>
 </body>

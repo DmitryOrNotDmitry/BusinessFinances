@@ -12,5 +12,6 @@ import java.util.Optional;
 @Repository
 public interface InvolveBusinessRepository extends JpaRepository<InvolveBusiness, Long> {
     List<InvolveBusiness> findAllByBusiness(Business business);
+    List<InvolveBusiness> findAllByUser(User user);
     Optional<InvolveBusiness> findByBusinessAndUser(Business business, User user);
 }

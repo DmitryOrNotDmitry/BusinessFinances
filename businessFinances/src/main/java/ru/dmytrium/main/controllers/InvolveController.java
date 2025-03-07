@@ -2,14 +2,18 @@ package ru.dmytrium.main.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.dmytrium.main.entity.Business;
 import ru.dmytrium.main.entity.InvolveBusiness;
+import ru.dmytrium.main.entity.Role;
 import ru.dmytrium.main.entity.User;
 import ru.dmytrium.main.entity.form.AddRoleForm;
 import ru.dmytrium.main.repo.InvolveBusinessRepository;
+import ru.dmytrium.main.repo.RoleRepository;
 import ru.dmytrium.main.repo.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -22,6 +26,27 @@ public class InvolveController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @GetMapping
+    public String usersAndRoles(@PathVariable Long businessId,
+                                @SessionAttribute(name = "selectedBusiness") Business business,
+                                Model model) {
+
+        List<Role> allRoles = roleRepository.findAll();
+        model.addAttribute("roles", allRoles);
+
+        model.addAttribute("addRoleTraits", new AddRoleForm());
+
+        List<InvolveBusiness> participants = involveRepository.findAllByBusiness(business);
+        model.addAttribute("participants", participants);
+
+        model.addAttribute("selectedBusiness", business);
+
+        return "businessInvolves";
+    }
+
     @PostMapping
     public String addParticipant(@PathVariable Long businessId,
                                  @ModelAttribute(name = "addRoleTraits") AddRoleForm addRoleTraits,
@@ -29,7 +54,7 @@ public class InvolveController {
 
         Optional<User> newParticipant = userRepository.findByName(addRoleTraits.getLogin());
         if (newParticipant.isEmpty()) {
-            return String.format("/businesses/%d", businessId);
+            return String.format("redirect:/businesses/%d/participant", businessId);
         }
 
         Optional<InvolveBusiness> alreadyExistsInvolve =
@@ -49,7 +74,7 @@ public class InvolveController {
             involveRepository.save(newInvolveBusiness);
         }
 
-        return String.format("redirect:/businesses/%d", businessId);
+        return String.format("redirect:/businesses/%d/participant", businessId);
     }
 
     @PostMapping("/delete")
@@ -58,7 +83,7 @@ public class InvolveController {
 
         involveRepository.deleteById(involveCode);
 
-        return String.format("redirect:/businesses/%d", businessId);
+        return String.format("redirect:/businesses/%d/participant", businessId);
     }
 
 }

@@ -38,3 +38,12 @@
 .sidebar ul li:hover {
     background-color: #10403B;
 }
+
+.selBusinessName {
+    font-weight: bold;
+    font-size: 18px;
+    color: #4CAF50;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom   : 10px;
+}
