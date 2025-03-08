@@ -90,5 +90,13 @@ public class BusinessController {
         return String.format("redirect:/businesses/%d", businessId);
     }
 
+    @PostMapping("/{businessId}/delete")
+    public String businessDelete(@SessionAttribute(name = "selectedBusiness") Business business, HttpSession session) {
+        businessRepository.delete(business);
+        session.removeAttribute("selectedBusiness");
+
+        return "redirect:/businesses";
+    }
+
 
 }

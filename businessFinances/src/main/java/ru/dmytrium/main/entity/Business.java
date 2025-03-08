@@ -10,6 +10,21 @@ import java.util.Date;
 @Data
 public class Business {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "business_id")
+    private Long businessId;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
+
+    @Column(name = "business_name")
+    private String businessName;
+
+    @Column(name = "created_at")
+    private Date createdAt;
+
     public Business() {
     }
 
@@ -25,19 +40,4 @@ public class Business {
         clone.createdAt = this.createdAt;
         return clone;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "business_id")
-    private Long businessId;
-
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private User author;
-
-    @Column(name = "business_name")
-    private String businessName;
-
-    @Column(name = "created_at")
-    private Date createdAt;
 }

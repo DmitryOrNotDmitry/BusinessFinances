@@ -19,6 +19,10 @@ public class Account {
     @JoinColumn(name = "author_id")
     private User author;
 
+    @ManyToOne
+    @JoinColumn(name = "for_business_id")
+    private Business forBusiness;
+
     @Column(name = "bank_name")
     private String bankName;
 

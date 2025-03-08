@@ -19,6 +19,10 @@ public class Agent {
     @JoinColumn(name = "author_id")
     private User author;
 
+    @ManyToOne
+    @JoinColumn(name = "for_business_id")
+    private Business forBusiness;
+
     @Column(name = "agent_name")
     private String agentName;
 
