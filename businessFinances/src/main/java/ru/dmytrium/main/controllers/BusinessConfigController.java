@@ -47,7 +47,7 @@ public class BusinessConfigController {
 
         model.addAttribute("selectedBusiness", business);
 
-        return "businessConfig";
+        return "business/businessConfig";
     }
 
     @PostMapping("/agent")

@@ -18,7 +18,7 @@ public class TransactionController {
     @GetMapping
     public String transactionCreatePage(Model model) {
         model.addAttribute("transaction", new Transaction());
-        return "transactionCreate";
+        return "business/transactionCreate";
     }
 
     @PostMapping

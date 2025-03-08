@@ -43,7 +43,7 @@ public class BusinessController {
     @GetMapping("/new")
     public String businessCreatePage(Model model) {
         model.addAttribute("newBusiness", new Business());
-        return "businessCreate";
+        return "business/businessCreate";
     }
 
     @PostMapping()
@@ -75,7 +75,7 @@ public class BusinessController {
         Business copyOfBusiness = business.get().clone();
         model.addAttribute("newBusinessSettings", copyOfBusiness);
 
-        return "businessInfo";
+        return "business/businessInfo";
     }
 
     @PostMapping("/{businessId}/settings")

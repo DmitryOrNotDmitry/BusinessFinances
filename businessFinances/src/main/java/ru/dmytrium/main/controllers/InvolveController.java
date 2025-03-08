@@ -44,7 +44,7 @@ public class InvolveController {
 
         model.addAttribute("selectedBusiness", business);
 
-        return "businessInvolves";
+        return "business/businessInvolves";
     }
 
     @PostMapping
