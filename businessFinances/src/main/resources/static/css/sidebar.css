@@ -47,3 +47,36 @@
     margin-top: 30px;
     margin-bottom   : 10px;
 }
+
+.user-info {
+    position: absolute;
+    bottom: 0px;
+    transform: translateY(-50%);
+    text-align: center;
+    width: 15%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-top: 1px solid #8AA6A3;
+}
+
+.user-info span {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.user-info form {
+    margin: 0;
+}
+
+.user-info button {
+    background-color: #8AA6A3;
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.user-info button:hover {
+    background-color: #10403B;
+}

@@ -84,30 +84,28 @@
     <h1>Профиль пользователя</h1>
 
     <div class="form-container">
-        <form th:action="@{/profile}" method="post" th:object="${user}">
+        <form th:action="@{/profile}" method="post" th:object="${newUserTraits}">
             <div class="form-input-container">
                 <label for="name">Имя</label>
-                <!-- Текущее имя отображается в поле, и оно редактируемое -->
-                <input type="text" id="name" th:field="*{name}" placeholder="Введите ваше имя" value="*{user.name}" required>
+                <input type="text" id="name" th:field="*{newName}" placeholder="Введите ваше имя" value="*{newName}" required>
             </div>
             <div class="form-input-container">
                 <label for="email">Email</label>
-                <!-- Текущий email отображается в поле, и оно редактируемое -->
-                <input type="email" id="email" th:field="*{email}" placeholder="Введите ваш email" value="*{user.email}" required>
+                <input type="email" id="email" th:field="*{newEmail}" placeholder="Введите ваш email" value="*{newEmail}">
             </div>
 
             <h3>Изменить пароль</h3>
             <div class="form-input-container">
                 <label for="oldPassword">Старый пароль</label>
-                <input type="password" id="oldPassword" th:field="*{oldPassword}" placeholder="Введите старый пароль" required>
+                <input type="password" id="oldPassword" th:field="*{oldPassword}" placeholder="Введите старый пароль">
             </div>
             <div class="form-input-container">
                 <label for="newPassword">Новый пароль</label>
-                <input type="password" id="newPassword" th:field="*{newPassword}" placeholder="Введите новый пароль" required>
+                <input type="password" id="newPassword" th:field="*{newPassword}" placeholder="Введите новый пароль">
             </div>
             <div class="form-input-container">
                 <label for="confirmPassword">Подтвердите новый пароль</label>
-                <input type="password" id="confirmPassword" th:field="*{confirmPassword}" placeholder="Подтвердите новый пароль" required>
+                <input type="password" id="confirmPassword" th:field="*{repeatedNewPassword}" placeholder="Подтвердите новый пароль">
             </div>
 
             <button type="submit">Сохранить изменения</button>

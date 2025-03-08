@@ -25,6 +25,13 @@
       <a th:href="@{/businesses/} + ${selectedBusiness.businessId} + '/participant'">Участники</a>
     </li>
   </ul>
+
+  <div class="user-info">
+    <span >Имя пользователя</span>
+    <form th:action="@{/logout}" method="post">
+      <button type="submit">Выйти</button>
+    </form>
+  </div>
 </div>
 </body>
 </html>
