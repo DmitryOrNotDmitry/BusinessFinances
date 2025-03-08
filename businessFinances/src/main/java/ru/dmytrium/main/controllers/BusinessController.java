@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import ru.dmytrium.main.entity.Business;
 import ru.dmytrium.main.entity.InvolveBusiness;
 import ru.dmytrium.main.entity.Role;
@@ -66,7 +67,7 @@ public class BusinessController {
         Optional<Business> business = businessRepository.findById(businessId);
 
         if (business.isEmpty()) {
-            return "businesses";
+            return "redirect:/businesses";
         }
 
         model.addAttribute("selectedBusiness", business.get());
@@ -91,9 +92,11 @@ public class BusinessController {
     }
 
     @PostMapping("/{businessId}/delete")
-    public String businessDelete(@SessionAttribute(name = "selectedBusiness") Business business, HttpSession session) {
+    public String businessDelete(@SessionAttribute(name = "selectedBusiness") Business business,
+                                 HttpSession session, SessionStatus sessionStatus) {
         businessRepository.delete(business);
         session.removeAttribute("selectedBusiness");
+        sessionStatus.setComplete();
 
         return "redirect:/businesses";
     }

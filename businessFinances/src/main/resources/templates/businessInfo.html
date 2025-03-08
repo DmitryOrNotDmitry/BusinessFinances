@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
-  <title>Profile</title>
+  <title th:text="${selectedBusiness.businessName} + ' - Настройки'"></title>
   <link rel="stylesheet" th:href="@{/css/sidebar.css}">
   <style>
     body {
@@ -81,7 +81,7 @@
 <div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>
 
 <div class="contentContainer">
-  <h1>Изменить название бизнеса</h1>
+  <h1>Настройки</h1>
 
   <div class="form-container">
     <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/settings'}" method="post" th:object="${newBusinessSettings}">

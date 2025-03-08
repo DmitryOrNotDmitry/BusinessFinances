@@ -24,6 +24,12 @@
     <li>
       <a th:href="@{/businesses/} + ${selectedBusiness.businessId} + '/participant'">Участники</a>
     </li>
+    <li>
+      <a th:href="@{/businesses/} + ${selectedBusiness.businessId} + '/config'">Конфигурация</a>
+    </li>
+    <li>
+      <a th:href="@{/businesses/} + ${selectedBusiness.businessId} + '/transaction'">Транзакция</a>
+    </li>
   </ul>
 
   <div class="user-info">

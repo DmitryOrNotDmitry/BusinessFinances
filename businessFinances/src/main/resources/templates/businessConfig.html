@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Конфигурация бизнеса</title>
+    <title th:text="${selectedBusiness.businessName} + ' - Конфигурация'"></title>
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
-            height: 100vh;
+            min-height: 100vh;
         }
         .sidebarContainer {
             width: 15%;
@@ -20,9 +20,8 @@
             height: 100%;
             background-color: #FFFFFF;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 20px;
         }
-        h1, h2 {
+        .contentContainer h1, .contentContainer h2 {
             text-align: center;
             color: #10403B;
             background: #BFBFBF;
@@ -36,6 +35,10 @@
             align-items: center;
             gap: 20px;
             margin-bottom: 20px;
+        }
+        .form-container form {
+            display: flex;
+            flex-flow: column;
         }
         .form-input-container {
             display: flex;
@@ -81,6 +84,32 @@
         th {
             background-color: #f4f4f4;
         }
+        .capture {
+            margin-top: 20px;
+        }
+        table tr:hover {
+            background-color: #f0f0f0;
+        }
+        .delete_button {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+        .delete_button:hover {
+            background: #cc0000;
+        }
+        table td:last-child, table th:last-child {
+            width: 200px;
+            min-width: 150px;
+            max-width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 </head>
 <body>
@@ -88,11 +117,11 @@
 <div class="contentContainer">
     <h1>Конфигурация бизнеса</h1>
 
-    <!-- Добавление контрагента -->
+
     <section>
-        <h2>Добавить контрагента</h2>
+        <h2 class="capture">Контрагенты</h2>
         <div class="form-container">
-            <form th:action="@{/agents}" method="post" th:object="${newAgent}">
+            <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/config/agent'}" method="post" th:object="${newAgent}">
                 <div class="form-input-container">
                     <label for="agentName">Имя контрагента</label>
                     <input type="text" id="agentName" th:field="*{agentName}" required>
@@ -104,19 +133,27 @@
             <tr>
                 <th>ID</th>
                 <th>Имя</th>
+                <th>Автор</th>
+                <th>Действие</th>
             </tr>
             <tr th:each="agent : ${agents}">
-                <td th:text="${agent.id}"></td>
+                <td th:text="${agent.agentId}"></td>
                 <td th:text="${agent.agentName}"></td>
+                <td th:text="${agent.author.name}"></td>
+                <td>
+                    <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/config/agent/delete'}" method="post">
+                        <input type="hidden" name="agentId" th:value="${agent.agentId}">
+                        <button class="delete_button" type="submit">Удалить</button>
+                    </form>
+                </td>
             </tr>
         </table>
     </section>
 
-    <!-- Добавление счета -->
     <section>
-        <h2>Добавить счет</h2>
+        <h2 class="capture">Cчета</h2>
         <div class="form-container">
-            <form th:action="@{/accounts}" method="post" th:object="${newAccount}">
+            <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/config/account'}" method="post" th:object="${newAccount}">
                 <div class="form-input-container">
                     <label for="bankName">Банк</label>
                     <input type="text" id="bankName" th:field="*{bankName}" required>
@@ -138,21 +175,29 @@
                 <th>Банк</th>
                 <th>Имя счета</th>
                 <th>Описание</th>
+                <th>Автор</th>
+                <th>Действие</th>
             </tr>
             <tr th:each="account : ${accounts}">
-                <td th:text="${account.id}"></td>
+                <td th:text="${account.accountCode}"></td>
                 <td th:text="${account.bankName}"></td>
                 <td th:text="${account.accountName}"></td>
                 <td th:text="${account.description}"></td>
+                <td th:text="${account.author.name}"></td>
+                <td>
+                    <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/config/account/delete'}" method="post">
+                        <input type="hidden" name="accountCode" th:value="${account.accountCode}">
+                        <button class="delete_button" type="submit">Удалить</button>
+                    </form>
+                </td>
             </tr>
         </table>
     </section>
 
-    <!-- Добавление категории транзакций -->
     <section>
-        <h2>Добавить категорию транзакций</h2>
+        <h2 class="capture">Категории транзакций</h2>
         <div class="form-container">
-            <form th:action="@{/categories}" method="post" th:object="${newCategory}">
+            <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/config/category'}" method="post" th:object="${newCategory}">
                 <div class="form-input-container">
                     <label for="categoryName">Название категории</label>
                     <input type="text" id="categoryName" th:field="*{categoryName}" required>
@@ -164,10 +209,19 @@
             <tr>
                 <th>ID</th>
                 <th>Название</th>
+                <th>Автор</th>
+                <th>Действие</th>
             </tr>
             <tr th:each="category : ${categories}">
-                <td th:text="${category.id}"></td>
+                <td th:text="${category.categoryId}"></td>
                 <td th:text="${category.categoryName}"></td>
+                <td th:text="${category.author.name}"></td>
+                <td>
+                    <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/config/category/delete'}" method="post">
+                        <input type="hidden" name="categoryId" th:value="${category.categoryId}">
+                        <button class="delete_button" type="submit">Удалить</button>
+                    </form>
+                </td>
             </tr>
         </table>
     </section>
