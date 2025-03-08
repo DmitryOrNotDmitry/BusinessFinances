@@ -28,8 +28,6 @@ public class RegisterController {
 
     @PostMapping
     public String registerConfirm(@ModelAttribute RegistrationForm registrationForm) {
-        System.out.println(registrationForm);
-
         if (!Objects.equals(registrationForm.getPassword(), registrationForm.getRepeatedPassword())) {
             return "register";
         }

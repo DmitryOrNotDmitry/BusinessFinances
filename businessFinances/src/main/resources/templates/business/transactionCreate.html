@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Создать транзакцию</title>
-    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
-            height: 100vh;
+            min-height: 100vh;
         }
         .sidebarContainer {
             width: 15%;
@@ -36,6 +35,12 @@
             align-items: center;
             gap: 20px;
         }
+
+        .form-container form {
+            display: flex;
+            flex-flow: column;
+        }
+
         .form-input-container {
             display: flex;
             flex-flow: row;
@@ -67,32 +72,40 @@
         .form-container button:hover {
             background-color: #0f5a47;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        table tr:hover {
+            background-color: #f0f0f0;
+        }
+        .table-container {
+            padding: 20px;
+        }
     </style>
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 </head>
 <body>
 <div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>
 
 <div class="contentContainer">
-    <h1>Создать новую транзакцию</h1>
+    <h1>Транзакции</h1>
 
     <div class="form-container">
-        <form th:action="@{/transactions}" method="post" th:object="${newTransaction}">
-            <div class="form-input-container">
-                <label for="counterparty">Контрагент</label>
-                <select id="counterparty" th:field="*{counterparty}" required>
-                    <option th:each="c : ${counterparties}" th:value="${c.id}" th:text="${c.name}"></option>
-                </select>
-            </div>
-            <div class="form-input-container">
-                <label for="account">Счет</label>
-                <select id="account" th:field="*{account}" required>
-                    <option th:each="a : ${accounts}" th:value="${a.id}" th:text="${a.name}"></option>
-                </select>
-            </div>
+        <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/transaction'}" method="post" th:object="${newTransaction}">
             <div class="form-input-container">
                 <label for="category">Категория</label>
                 <select id="category" th:field="*{category}" required>
-                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                    <option th:each="cat : ${categories}" th:value="${cat.categoryId}" th:text="${cat.categoryName}"></option>
                 </select>
             </div>
             <div class="form-input-container">
@@ -100,15 +113,53 @@
                 <input type="text" id="description" th:field="*{description}" placeholder="Введите описание" required>
             </div>
             <div class="form-input-container">
+                <label for="agent">Контрагент</label>
+                <select id="agent" th:field="*{agent}" required>
+                    <option th:each="agent : ${agents}" th:value="${agent.agentId}" th:text="${agent.agentName}"></option>
+                </select>
+            </div>
+            <div class="form-input-container">
+                <label for="account">Счет</label>
+                <select id="account" th:field="*{account}" required>
+                    <option th:each="a : ${accounts}" th:value="${a.accountCode}" th:text="${a.accountName}"></option>
+                </select>
+            </div>
+            <div class="form-input-container">
                 <label for="amount">Сумма</label>
                 <input type="number" id="amount" th:field="*{amount}" step="0.01" placeholder="Введите сумму" required>
             </div>
             <div class="form-input-container">
                 <label for="date">Дата</label>
-                <input type="date" id="date" th:field="*{date}" required>
+                <input type="date" id="date" th:field="*{transactionDate}" required>
             </div>
             <button type="submit">Создать</button>
         </form>
+    </div>
+
+    <div class="table-container">
+        <h2>Последние 20 транзакций</h2>
+        <table class="transactions-table">
+            <thead>
+            <tr>
+                <th>Категория</th>
+                <th>Описание</th>
+                <th>Контрагент</th>
+                <th>Счет</th>
+                <th>Сумма</th>
+                <th>Дата</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transaction : ${transactions}">
+                <td th:text="${transaction.category.categoryName}"></td>
+                <td th:text="${transaction.description}"></td>
+                <td th:text="${transaction.agent.agentName}"></td>
+                <td th:text="${transaction.account.accountName}"></td>
+                <td th:text="${transaction.amount}"></td>
+                <td th:text="${transaction.transactionDate}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

@@ -2,6 +2,7 @@ package ru.dmytrium.main.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -39,5 +40,6 @@ public class Transaction {
     private String description;
 
     @Column(name = "transaction_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date transactionDate;
 }
