@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Создать транзакцию</title>
+    <title th:text="${selectedBusiness.businessName} + ' - Транзакции'"></title>
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     <style>
         body {
             margin: 0;
@@ -92,7 +93,6 @@
             padding: 20px;
         }
     </style>
-    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 </head>
 <body>
 <div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>
@@ -155,7 +155,7 @@
                 <td th:text="${transaction.description}"></td>
                 <td th:text="${transaction.agent.agentName}"></td>
                 <td th:text="${transaction.account.accountName}"></td>
-                <td th:text="${transaction.amount}"></td>
+                <td th:text="${#numbers.formatDecimal(transaction.amount, 1, 'COMMA', 2, 'POINT')}"></td>
                 <td th:text="${transaction.transactionDate}"></td>
             </tr>
             </tbody>

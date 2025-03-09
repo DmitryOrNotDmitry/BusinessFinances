@@ -18,18 +18,13 @@
 
   <div class="selBusinessName" th:if="${selectedBusiness}" th:text="${selectedBusiness.businessName}">Имя бизнеса</div>
   <ul th:if="${selectedBusiness}">
-    <li>
-      <a th:href="@{/businesses/} + ${selectedBusiness.businessId} + '/settings'">Настройки</a>
-    </li>
-    <li>
-      <a th:href="@{/businesses/} + ${selectedBusiness.businessId} + '/participant'">Участники</a>
-    </li>
-    <li>
-      <a th:href="@{/businesses/} + ${selectedBusiness.businessId} + '/config'">Конфигурация</a>
-    </li>
-    <li>
-      <a th:href="@{/businesses/} + ${selectedBusiness.businessId} + '/transaction'">Транзакция</a>
-    </li>
+    <th:block th:with="baseUrl=@{/businesses/} + ${selectedBusiness.businessId}">
+      <li><a th:href="${baseUrl} + '/settings'">Настройки</a></li>
+      <li><a th:href="${baseUrl} + '/participant'">Участники</a></li>
+      <li><a th:href="${baseUrl} + '/config'">Конфигурация</a></li>
+      <li><a th:href="${baseUrl} + '/transaction'">Транзакции</a></li>
+      <li><a th:href="${baseUrl} + '/obligation'">Обязательства</a></li>
+    </th:block>
   </ul>
 
   <div class="user-info">

@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Создать обязательство</title>
+    <title th:text="${selectedBusiness.businessName} + ' - Обязательства'"></title>
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
-            height: 100vh;
+            min-height: 100vh;
         }
         .sidebarContainer {
             width: 15%;
@@ -82,19 +82,70 @@
         .form-container button:hover {
             background-color: #0f5a47;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        table tr:hover {
+            background-color: #f0f0f0;
+        }
+        .table-container {
+            padding: 20px;
+        }
+        .transaction-list {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin: 10px 0;
+        }
+
+        .transaction-list label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .transaction-list select {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            font-size: 14px;
+            height: 250px;
+        }
+
+        .transaction-list select:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
     </style>
 </head>
 <body>
 <div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>
 
 <div class="contentContainer">
-    <h1>Создать обязательство</h1>
+    <h1>Обязательства</h1>
 
     <div class="form-container">
-        <form th:action="@{/obligations}" method="post" th:object="${newObligation}">
+        <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/obligation'}" method="post" th:object="${obligationForm}">
             <div class="form-input-container">
                 <label for="type">Тип</label>
-                <input type="text" id="type" th:field="*{type}" placeholder="Введите тип" required>
+                <select th:field="*{type}">
+                    <option th:each="type : ${types}" th:value="${type.shortName}" th:text="${type.obligTypeName}"></option>
+                </select>
             </div>
             <div class="form-input-container">
                 <label for="description">Описание</label>
@@ -103,11 +154,39 @@
             <div class="transaction-list" id="transactionList">
                 <label>Добавить транзакции:</label>
                 <select th:field="*{transactions}" multiple>
-                    <option th:each="transaction : ${transactions}" th:value="${transaction.id}" th:text="${transaction.name}"></option>
+                    <option th:each="transaction : ${transactions}" th:value="${transaction.transactionCode}" th:text="${transaction.description}"></option>
                 </select>
+            </div>
+            <div class="form-input-container">
+                <label for="date">Дата</label>
+                <input type="datetime-local" id="date" th:field="*{dueDate}" required>
             </div>
             <button type="submit">Создать</button>
         </form>
+    </div>
+
+    <div class="table-container">
+        <h2>Последние 20 обязательств</h2>
+        <table class="obligations-table">
+            <thead>
+            <tr>
+                <th>Тип</th>
+                <th>Описание</th>
+                <th>Сумма</th>
+                <th>Связанные транзакции</th>
+                <th>Дата</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="obligation : ${obligations}">
+                <td th:text="${obligation.type.obligTypeName}"></td>
+                <td th:text="${obligation.description}"></td>
+                <td th:text="${#numbers.formatDecimal(amountsSum.get(obligation), 1, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${transactionsString.get(obligation)}"></td>
+                <td th:text="${obligation.dueDate}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>
