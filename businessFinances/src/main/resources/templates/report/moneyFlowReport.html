@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${selectedBusiness.businessName} + ' - Денежный поток'"></title>
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebarContainer {
+            width: 15%;
+            height: 100%;
+        }
+        .contentContainer {
+            width: 85%;
+            height: 100%;
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #10403B;
+            background: #BFBFBF;
+            margin: 0;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .report-container {
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .date-form {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .date-form label {
+            margin-right: 10px;
+        }
+        .date-form input {
+            padding: 8px;
+            font-size: 14px;
+        }
+        .generate-report-btn {
+            padding: 10px 20px;
+            background-color: #10403B;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .generate-report-btn:hover {
+            background-color: #0a2c26;
+        }
+        .date-range {
+            margin: 20px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .highlight-date {
+            color: #2d9cdb;
+        }
+        .negative {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>
+
+<div class="contentContainer">
+    <h1>Денежный поток</h1>
+
+    <div class="report-container">
+        <!-- Форма для ввода дат -->
+        <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/moneyflow'}" method="get" th:object="${moneyFlowForm}">
+            <div class="date-form">
+                <div>
+                    <label for="startDate">Дата начала:</label>
+                    <input type="date" id="startDate" name="startDate" required>
+                </div>
+                <div>
+                    <label for="endDate">Дата конца:</label>
+                    <input type="date" id="endDate" name="endDate" required>
+                </div>
+                <button type="submit" class="generate-report-btn">Сформировать отчет</button>
+            </div>
+        </form>
+
+        <div class="date-range" th:if="${startDate != null and endDate != null}">
+            <p>Отчет с <span class="highlight-date" th:text="${startDate}"></span> по <span class="highlight-date" th:text="${endDate}"></span></p>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Категория</th>
+                <th>Поступление</th>
+                <th>Убытие</th>
+                <th>Баланс</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${summaryReport.name}"></td>
+                <td th:text="${summaryReport.inTotal}"></td>
+                <td th:text="${summaryReport.outTotal}" th:class="${summaryReport.outTotal < 0 ? 'negative' : ''}"></td>
+                <td th:text="${summaryReport.inTotal + summaryReport.outTotal}"
+                    th:class="${(summaryReport.inTotal + summaryReport.outTotal) < 0 ? 'negative' : ''}"></td>
+            </tr>
+            <tr th:each="item : ${moneyFlowReport}">
+                <td th:text="${item.category.categoryName}"></td>
+
+                <td th:if="${item.amountSum >= 0}" th:text="${item.amountSum}"></td>
+                <td th:if="${item.amountSum < 0}"></td>
+
+                <td th:if="${item.amountSum >= 0}"></td>
+                <td th:if="${item.amountSum < 0}" th:text="${item.amountSum}" th:class="negative"></td>
+
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
