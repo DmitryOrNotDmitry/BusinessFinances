@@ -63,4 +63,13 @@ public class TransactionController {
         return String.format("redirect:/businesses/%d/transaction", selectedBusiness.getBusinessId());
     }
 
+    @PostMapping("/delete")
+    public String deleteTransaction(@RequestParam Long transactionCode,
+                              @SessionAttribute(name = "selectedBusiness") Business business) {
+
+        transactionRepository.deleteById(transactionCode);
+
+        return String.format("redirect:/businesses/%d/transaction", business.getBusinessId());
+    }
+
 }

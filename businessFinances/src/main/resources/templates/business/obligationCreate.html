@@ -131,6 +131,29 @@
             outline: none;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
+        .delete_button {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+        .delete_button:hover {
+            background: #cc0000;
+        }
+        table td:last-child, table th:last-child {
+            width: 200px;
+            min-width: 150px;
+            max-width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .table-container {
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
@@ -175,6 +198,7 @@
                 <th>Сумма</th>
                 <th>Связанные транзакции</th>
                 <th>Дата</th>
+                <th>Действие</th>
             </tr>
             </thead>
             <tbody>
@@ -184,6 +208,12 @@
                 <td th:text="${#numbers.formatDecimal(amountsSum.get(obligation), 1, 'COMMA', 2, 'POINT')}"></td>
                 <td th:text="${transactionsString.get(obligation)}"></td>
                 <td th:text="${obligation.dueDate}"></td>
+                <td>
+                    <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/obligation/delete'}" method="post">
+                        <input type="hidden" name="obligationId" th:value="${obligation.obligationId}">
+                        <button class="delete_button" type="submit">Удалить</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

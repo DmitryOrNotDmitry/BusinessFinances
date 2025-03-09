@@ -111,4 +111,13 @@ public class ObligationController {
         return String.format("redirect:/businesses/%d/obligation", selectedBusiness.getBusinessId());
     }
 
+    @PostMapping("/delete")
+    public String deleteObligation(@RequestParam Long obligationId,
+                              @SessionAttribute(name = "selectedBusiness") Business business) {
+
+        obligationRepository.deleteById(obligationId);
+
+        return String.format("redirect:/businesses/%d/obligation", business.getBusinessId());
+    }
+
 }
