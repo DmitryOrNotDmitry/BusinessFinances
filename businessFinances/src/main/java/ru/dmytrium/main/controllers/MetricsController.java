@@ -16,6 +16,7 @@ import ru.dmytrium.main.services.MetricsService;
 import ru.dmytrium.main.services.ObligationService;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +41,10 @@ public class MetricsController {
         List<Metric> metrics = new ArrayList<>();
         if (startDate != null && endDate != null) {
             metrics = metricsService.getAllMetrics(business, startDate, endDate);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+            model.addAttribute("startDate", sdf.format(startDate));
+            model.addAttribute("endDate", sdf.format(endDate));
         }
         model.addAttribute("metrics", metrics);
 

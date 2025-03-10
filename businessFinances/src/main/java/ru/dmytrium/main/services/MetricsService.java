@@ -76,7 +76,7 @@ public class MetricsService {
         Metric metric = new Metric();
 
         metric.setName("Прибыль");
-        metric.setValue(in.getValue().subtract(out.getValue()));
+        metric.setValue(in.getValue().add(out.getValue()));
 
         return metric;
     }

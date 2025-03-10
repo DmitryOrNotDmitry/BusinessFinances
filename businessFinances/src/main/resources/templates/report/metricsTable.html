@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title th:text="${selectedBusiness.businessName} + ' - Метрики о прибыли'"></title>
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <script th:src="@{/js/inputCurrentDates.js}"></script>
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
             min-height: 100vh;
-            font-family: Arial, sans-serif;
             background-color: #f8f9fa;
         }
         .sidebarContainer {
@@ -19,9 +19,7 @@
         }
         .contentContainer {
             width: 85%;
-            height: 100%;
             background: white;
-            padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
             overflow-y: auto;
@@ -29,6 +27,9 @@
         h1 {
             text-align: center;
             color: #10403B;
+            background: #BFBFBF;
+            margin: 0;
+            padding: 10px;
             margin-bottom: 20px;
         }
         table {
@@ -79,6 +80,9 @@
             color: red;
             font-weight: bold;
         }
+        .report-container {
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
@@ -87,38 +91,40 @@
 <div class="contentContainer">
     <h1>Метрики о прибыли</h1>
 
-    <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/moneyflow'}" method="get" th:object="${moneyFlowForm}">
-        <div class="date-form">
-            <div>
-                <label for="startDate">Дата начала:</label>
-                <input type="date" id="startDate" name="startDate" required>
+    <div class="report-container">
+        <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/metrics'}" method="get" th:object="${moneyFlowForm}">
+            <div class="date-form">
+                <div>
+                    <label for="startDate">Дата начала:</label>
+                    <input type="date" id="startDate" name="startDate" required>
+                </div>
+                <div>
+                    <label for="endDate">Дата конца:</label>
+                    <input type="date" id="endDate" name="endDate" required>
+                </div>
+                <button type="submit" class="generate-report-btn">Сформировать отчет</button>
             </div>
-            <div>
-                <label for="endDate">Дата конца:</label>
-                <input type="date" id="endDate" name="endDate" required>
-            </div>
-            <button type="submit" class="generate-report-btn">Сформировать отчет</button>
+        </form>
+
+        <div class="date-range" th:if="${startDate != null and endDate != null}">
+            <p>Отчет с <span class="highlight-date" th:text="${startDate}"></span> по <span class="highlight-date" th:text="${endDate}"></span></p>
         </div>
-    </form>
 
-    <div class="date-range" th:if="${startDate != null and endDate != null}">
-        <p>Отчет с <span class="highlight-date" th:text="${startDate}"></span> по <span class="highlight-date" th:text="${endDate}"></span></p>
+        <table>
+            <thead>
+            <tr>
+                <th>Метрика</th>
+                <th>Значение</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="metric : ${metrics}">
+                <td th:text="${metric.name}"></td>
+                <td th:text="${metric.value}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-
-    <table>
-        <thead>
-        <tr>
-            <th>Метрика</th>
-            <th>Значение</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="metric : ${metrics}">
-            <td th:text="${metric.name}"></td>
-            <td th:text="${metric.value}"></td>
-        </tr>
-        </tbody>
-    </table>
 </div>
 </body>
 </html>
