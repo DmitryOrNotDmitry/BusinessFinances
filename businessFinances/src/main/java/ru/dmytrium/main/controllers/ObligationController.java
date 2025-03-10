@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.dmytrium.main.entity.*;
 import ru.dmytrium.main.entity.form.ObligationForm;
 import ru.dmytrium.main.repo.*;
+import ru.dmytrium.main.services.ObligationService;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -19,32 +20,19 @@ import java.util.Map;
 public class ObligationController {
 
     @Autowired
-    ObligationRepository obligationRepository;
+    private ObligationRepository obligationRepository;
 
     @Autowired
-    ObligationTypeRepository obligationTypeRepository;
+    private ObligationTypeRepository obligationTypeRepository;
 
     @Autowired
-    TransactionRepository transactionRepository;
+    private TransactionRepository transactionRepository;
 
     @Autowired
-    ConsideringRepository consideringRepository;
+    private ConsideringRepository consideringRepository;
 
-    private Map<Obligation, BigDecimal> calcAmountsSum(List<Obligation> obligations) {
-        Map<Obligation, BigDecimal> amountsSum = new HashMap<>();
-
-        for (Obligation o : obligations) {
-            List<Considering> considerings = consideringRepository.findAllByObligation(o);
-            BigDecimal sum = new BigDecimal(0);
-            for (Considering c : considerings) {
-                sum = sum.add(c.getTransaction().getAmount());
-            }
-
-            amountsSum.put(o, sum);
-        }
-
-        return amountsSum;
-    }
+    @Autowired
+    private ObligationService obligationService;
 
     private Map<Obligation, String> calcTransactionsToString(List<Obligation> obligations) {
         Map<Obligation, String> strings = new HashMap<>();
@@ -83,7 +71,7 @@ public class ObligationController {
         List<ObligationType> obligationTypes = obligationTypeRepository.findAll();
         model.addAttribute("types", obligationTypes);
 
-        model.addAttribute("amountsSum", calcAmountsSum(obligations));
+        model.addAttribute("amountsSum", obligationService.calcAmountsSum(obligations));
         model.addAttribute("transactionsString", calcTransactionsToString(obligations));
 
         model.addAttribute("selectedBusiness", business);
