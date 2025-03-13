@@ -1,6 +1,7 @@
 package ru.dmytrium.main.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class ProfileController {
     private UserRepository userRepository;
 
     @GetMapping
-    public String profilePage(@SessionAttribute(name = "user", required = false) User user,
+    public String profilePage(@AuthenticationPrincipal User user,
                               @SessionAttribute(name = "selectedBusiness", required = false) Business business,
                               Model model) {
         model.addAttribute("newUserTraits",
@@ -31,7 +32,7 @@ public class ProfileController {
     }
 
     @PostMapping
-    public String profileEdit(@SessionAttribute(name = "user", required = false) User user,
+    public String profileEdit(@AuthenticationPrincipal User user,
                               @ModelAttribute UserTraitsForm newUserTraits) {
         user.setName(newUserTraits.getNewName());
         user.setEmail(newUserTraits.getNewEmail());

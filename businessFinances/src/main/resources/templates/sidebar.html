@@ -30,7 +30,7 @@
   </ul>
 
   <div class="user-info">
-    <span >Имя пользователя</span>
+    <span th:text="${#authentication.name}">Имя пользователя</span>
     <form th:action="@{/logout}" method="post">
       <button type="submit">Выйти</button>
     </form>

@@ -2,6 +2,7 @@ package ru.dmytrium.main.controllers;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class BusinessController {
     private RoleService roleService;
 
     @GetMapping
-    public String businessPage(@SessionAttribute(name = "user", required = false) User user, Model model) {
+    public String businessPage(@AuthenticationPrincipal User user, Model model) {
         List<InvolveBusiness> allUserRoles = involvesRepository.findAllByUser(user);
         model.addAttribute("userInvolves", allUserRoles);
         return "businesses";
@@ -48,7 +49,7 @@ public class BusinessController {
 
     @PostMapping()
     public String businessCreateConfirm(@ModelAttribute Business newBusiness,
-                                        @SessionAttribute(name = "user", required = false) User author) {
+                                        @AuthenticationPrincipal User author) {
 
         newBusiness.setAuthor(author);
         businessRepository.save(newBusiness);

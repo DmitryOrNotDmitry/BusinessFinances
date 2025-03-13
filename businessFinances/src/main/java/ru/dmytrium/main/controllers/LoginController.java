@@ -11,11 +11,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("login")
-@SessionAttributes("user")
 public class LoginController {
-
-    @Autowired
-    UserRepository userRepository;
 
     @GetMapping
     public String login(Model model) {
@@ -26,21 +22,22 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping
-    public String loginConfirm(@ModelAttribute(name = "user_login") User userLogin, Model model) {
-        Optional<User> userFromDB = userRepository.findByName(userLogin.getName());
-
-        if (userFromDB.isEmpty()) {
-            return "login";
-        }
-
-        if (!userFromDB.get().getPassword().equals(userLogin.getPassword())) {
-            return "login";
-        }
-
-        model.addAttribute("user", userFromDB.get());
-
-        return "redirect:/businesses";
-    }
+//    @PostMapping
+//    public String loginConfirm(@ModelAttribute(name = "user_login") User userLogin, Model model) {
+//        System.out.println("UnReachable");
+//        Optional<User> userFromDB = userRepository.findByName(userLogin.getName());
+//
+//        if (userFromDB.isEmpty()) {
+//            return "login";
+//        }
+//
+//        if (!userFromDB.get().getPassword().equals(userLogin.getPassword())) {
+//            return "login";
+//        }
+//
+//        model.addAttribute("user", userFromDB.get());
+//
+//        return "redirect:/businesses";
+//    }
 
 }

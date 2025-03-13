@@ -1,6 +1,7 @@
 package ru.dmytrium.main.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +54,7 @@ public class BusinessConfigController {
     @PostMapping("/agent")
     public String createAgent(@ModelAttribute Agent newAgent,
                               @SessionAttribute(name = "selectedBusiness") Business business,
-                              @SessionAttribute(name = "user") User author) {
+                              @AuthenticationPrincipal User author) {
 
         if (!newAgent.getAgentName().isBlank()) {
             newAgent.setAuthor(author);
@@ -77,7 +78,7 @@ public class BusinessConfigController {
     @PostMapping("/account")
     public String createAccount(@ModelAttribute Account newAccount,
                                 @SessionAttribute(name = "selectedBusiness") Business business,
-                                @SessionAttribute(name = "user") User author) {
+                                @AuthenticationPrincipal User author) {
 
         if (!newAccount.getAccountName().isBlank()) {
             newAccount.setAuthor(author);
@@ -100,7 +101,7 @@ public class BusinessConfigController {
     @PostMapping("/category")
     public String createCategory(@ModelAttribute TransactionCategory newCategory,
                                  @SessionAttribute(name = "selectedBusiness") Business business,
-                                 @SessionAttribute(name = "user") User author) {
+                                 @AuthenticationPrincipal User author) {
 
         if (!newCategory.getCategoryName().isBlank()) {
             newCategory.setAuthor(author);
