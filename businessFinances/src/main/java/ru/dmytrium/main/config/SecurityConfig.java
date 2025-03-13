@@ -3,24 +3,31 @@ package ru.dmytrium.main.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import ru.dmytrium.main.repo.InvolveBusinessRepository;
+import ru.dmytrium.main.repo.RoleRepository;
 import ru.dmytrium.main.services.BusinessService;
+import ru.dmytrium.main.services.RoleService;
 
 @Configuration
 public class SecurityConfig {
 
     private final BusinessService businessService;
 
+    private final InvolveBusinessRepository involveRepository;
+
     private final BusinessAuthManager businessAuthManager;
 
     @Autowired
-    public SecurityConfig(BusinessService businessService) {
+    public SecurityConfig(BusinessService businessService, InvolveBusinessRepository involveRepository) {
         this.businessService = businessService;
         this.businessAuthManager = new BusinessAuthManager(businessService, "businessId");
+        this.involveRepository = involveRepository;
     }
 
     @Bean
@@ -28,8 +35,14 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/images/**", "/css/**", "/js/**").permitAll()
+
+                        .requestMatchers(HttpMethod.POST, "/businesses/{businessId}", "/businesses/{businessId}/**")
+                            .access(new UserHasRoleManager(involveRepository, "businessId",
+                                    RoleService.ROLE_OWNER, RoleService.ROLE_ADMIN))
+
                         .requestMatchers("/businesses/{businessId}", "/businesses/{businessId}/**")
                             .access(businessAuthManager)
+
                         .anyRequest().authenticated()
                 )
                 .formLogin(httpSec -> httpSec

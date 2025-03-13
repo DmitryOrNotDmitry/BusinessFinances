@@ -8,12 +8,17 @@ import ru.dmytrium.main.repo.RoleRepository;
 
 @Service
 public class RoleService {
+
+    public final static String ROLE_OWNER = "Владелец";
+    public final static String ROLE_ADMIN = "Администратор";
+    public final static String ROLE_WORKER = "Работник";
+
     @Autowired
     private RoleRepository roleRepository;
 
     public Role getOwnerRole() {
-        return roleRepository.findByRoleName("Владелец")
-                .orElseThrow(() -> new EntityNotFoundException("Роль 'Владелец' не найдена"));
+        return roleRepository.findByRoleName(ROLE_OWNER)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Роль '%s' не найдена", ROLE_OWNER)));
     }
 }
 
