@@ -17,11 +17,14 @@ import ru.dmytrium.main.services.RoleService;
 @Configuration
 public class SecurityConfig {
 
+    private final static String BUSINESS_ID_NAME = "businessId";
+
     private final BusinessService businessService;
 
     private final InvolveBusinessRepository involveRepository;
 
     private final BusinessAuthManager businessAuthManager;
+
 
     @Autowired
     public SecurityConfig(BusinessService businessService, InvolveBusinessRepository involveRepository) {
@@ -34,11 +37,30 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/images/**", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/", "/login", "/register", "/images/**", "/css/**", "/js/**").permitAll()
 
-                        .requestMatchers(HttpMethod.POST, "/businesses/{businessId}", "/businesses/{businessId}/**")
-                            .access(new UserHasRoleManager(involveRepository, "businessId",
-                                    RoleService.ROLE_OWNER, RoleService.ROLE_ADMIN))
+                        .requestMatchers("/businesses/new").authenticated()
+
+                        .requestMatchers(HttpMethod.POST, "/businesses/{businessId}/settings",
+                                "/businesses/{businessId}/delete"
+                        )
+                        .access(new UserHasRoleManager(involveRepository, BUSINESS_ID_NAME,
+                                RoleService.ROLE_OWNER))
+
+                        .requestMatchers(HttpMethod.POST, "/businesses/{businessId}/participant",
+                                "/businesses/{businessId}/participant/delete"
+                        )
+                        .access(new UserHasRoleManager(involveRepository, BUSINESS_ID_NAME,
+                                RoleService.ROLE_OWNER, RoleService.ROLE_ADMIN))
+
+                        .requestMatchers(HttpMethod.POST,"/businesses/{businessId}/config/**",
+                                "/businesses/{businessId}/transaction",
+                                "/businesses/{businessId}/transaction/delete",
+                                "/businesses/{businessId}/obligation",
+                                "/businesses/{businessId}/obligation/delete"
+                        )
+                        .access(new UserHasRoleManager(involveRepository, BUSINESS_ID_NAME,
+                                RoleService.ROLE_OWNER, RoleService.ROLE_ADMIN, RoleService.ROLE_WORKER))
 
                         .requestMatchers("/businesses/{businessId}", "/businesses/{businessId}/**")
                             .access(businessAuthManager)
