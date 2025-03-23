@@ -15,14 +15,4 @@ public class BusinessFinancesApplication {
 		SpringApplication.run(BusinessFinancesApplication.class, args);
 	}
 
-	@Bean
-	public DataSource getDataSource() {
-		return DataSourceBuilder.create()
-				.type(org.postgresql.ds.PGSimpleDataSource.class)
-				.url("jdbc:postgresql://localhost:5432/mydatabase")
-				.username("postgres")
-				.password("postgres")
-				.build();
-	}
-
 }
