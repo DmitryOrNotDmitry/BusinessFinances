@@ -27,7 +27,7 @@ public interface ObligationRepository extends JpaRepository<Obligation, Long> {
         JOIN Considering c ON c.obligation = o
         JOIN Transaction t ON c.transaction = t
         WHERE t.business = :business
-        AND t.transactionDate BETWEEN :startDate AND :endDate
+        AND o.dueDate BETWEEN :startDate AND :endDate
     """)
     List<Obligation> findAllByBusinessAndDates(Business business, Date startDate, Date endDate);
 }
