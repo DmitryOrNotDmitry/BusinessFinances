@@ -14,21 +14,19 @@ import ru.dmytrium.main.repo.RoleRepository;
 import ru.dmytrium.main.services.BusinessService;
 import ru.dmytrium.main.services.RoleService;
 
+import static org.springframework.security.web.util.matcher.RegexRequestMatcher.regexMatcher;
+
 @Configuration
 public class SecurityConfig {
 
     private final static String BUSINESS_ID_NAME = "businessId";
 
-    private final BusinessService businessService;
-
     private final InvolveBusinessRepository involveRepository;
 
     private final BusinessAuthManager businessAuthManager;
 
-
     @Autowired
     public SecurityConfig(BusinessService businessService, InvolveBusinessRepository involveRepository) {
-        this.businessService = businessService;
         this.businessAuthManager = new BusinessAuthManager(businessService, "businessId");
         this.involveRepository = involveRepository;
     }
@@ -37,7 +35,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/lab3/**", "/lab3", "/", "/login", "/register", "/images/**", "/css/**", "/js/**").permitAll()
+                        .requestMatchers(regexMatcher("/lab.*")).permitAll()
+                        .requestMatchers("/", "/login", "/register", "/images/**", "/css/**", "/js/**").permitAll()
 
                         .requestMatchers("/businesses/new").authenticated()
 

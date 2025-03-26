@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Top Agents by Transaction Volume</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h2 class="mb-4">Top Agents by Transaction Volume</h2>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Agent ID</th>
+      <th>Agent Name</th>
+      <th>Total Amount</th>
+      <th>Transaction Count</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="agent : ${top_agents}">
+      <td th:text="${agent.agentId}"></td>
+      <td th:text="${agent.agentName}"></td>
+      <td th:text="${agent.totalAmount}"></td>
+      <td th:text="${agent.transactionCount}"></td>
+    </tr>
+    <tr th:if="${top_agents.isEmpty()}">
+      <td colspan="4" class="text-center">No data available</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <a href="/lab4" class="btn btn-primary">Back</a>
+</div>
+</body>
+</html>

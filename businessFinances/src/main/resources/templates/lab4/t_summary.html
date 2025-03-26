@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Transaction Summary</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h2 class="mb-4">Transaction Summary</h2>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Total Transactions</th>
+      <th>Total Amount</th>
+      <th>Average Transaction</th>
+      <th>Earliest Transaction</th>
+      <th>Latest Transaction</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${t_summary != null}">
+      <td th:text="${t_summary.totalTransactions}"></td>
+      <td th:text="${t_summary.totalAmount}"></td>
+      <td th:text="${t_summary.avgTransaction}"></td>
+      <td th:text="${t_summary.minDate}"></td>
+      <td th:text="${t_summary.maxDate}"></td>
+    </tr>
+    <tr th:unless="${t_summary != null}">
+      <td colspan="5" class="text-center">No data available</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <a href="/lab4" class="btn btn-primary">Back</a>
+</div>
+</body>
+</html>

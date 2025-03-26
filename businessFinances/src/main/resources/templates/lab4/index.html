@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lab 4 - Procedures</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h2 class="mb-4">Lab 4 - Процедуры</h2>
+
+  <div class="input-group">
+    <input type="number" id="businessId" class="form-control" placeholder="Business ID" required>
+  </div>
+
+  <ul class="list-group mt-3">
+    <li class="list-group-item">
+      <a href="#" onclick="navigateTo('/lab4/t_summary/')" class="text-decoration-none">Transaction Summary</a>
+      <p class="mb-0 text-muted">Обзор всех транзакций, связанных с указанным бизнесом, с ключевыми деталями и суммами.</p>
+    </li>
+    <li class="list-group-item">
+      <a href="#" onclick="navigateTo('/lab4/top_agents/')" class="text-decoration-none">Top Agents by Transaction Volume</a>
+      <p class="mb-0 text-muted">Рейтинг агентов, участвующих в транзакциях, отсортированных по объему работы.</p>
+    </li>
+    <li class="list-group-item">
+      <a href="#" onclick="navigateTo('/lab4/monthly_report/')" class="text-decoration-none">Monthly Transactions Report</a>
+      <p class="mb-0 text-muted">Ежемесячный отчет о транзакциях, показывающий активность бизнеса по месяцам.</p>
+    </li>
+  </ul>
+</div>
+
+<script>
+  function navigateTo(basePath) {
+    const businessId = document.getElementById('businessId').value;
+    if (businessId) {
+      window.location.href = basePath + businessId;
+    } else {
+      alert('Введите Business ID');
+    }
+  }
+</script>
+</body>
+</html>
