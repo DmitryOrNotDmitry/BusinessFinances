@@ -8,6 +8,8 @@ import org.eclipse.birt.core.exception.BirtException;
 import org.eclipse.birt.core.framework.Platform;
 import org.eclipse.birt.report.engine.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -16,6 +18,9 @@ import java.util.Map;
 
 @Component
 public class Birt {
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     private IReportEngine reportEngine;
 
@@ -37,12 +42,22 @@ public class Birt {
     @Autowired
     private DataSource dataSource;
 
+    private String getAbsoluteResourcePath(String relativePath) {
+        try {
+            Resource resource = resourceLoader.getResource(relativePath);
+            return resource.getFile().getAbsolutePath();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public void generateUsersReport(String id, HttpServletResponse response, HttpServletRequest request) {
         Map<String, Object> reportParams = new HashMap<>();
         reportParams.put("p_id", id == null || id.isEmpty() ? null : Integer.parseInt(id));
 
         generatePDF(response, request,
-                "C:\\Users\\cuzne\\workspace\\BirtReportsForBF\\users.rptdesign", reportParams);
+                getAbsoluteResourcePath("classpath:static/birt/users.rptdesign"), reportParams);
     }
 
     public void generateTransactionsReport(String businessId, HttpServletResponse response, HttpServletRequest request) {
@@ -50,7 +65,7 @@ public class Birt {
         reportParams.put("business_id", businessId == null || businessId.isEmpty() ? null : Integer.parseInt(businessId));
 
         generatePDF(response, request,
-                "C:\\Users\\cuzne\\workspace\\BirtReportsForBF\\trans_summary.rptdesign", reportParams);
+                getAbsoluteResourcePath("classpath:static/birt/trans_summary.rptdesign"), reportParams);
     }
 
     private void generatePDF(HttpServletResponse response,
