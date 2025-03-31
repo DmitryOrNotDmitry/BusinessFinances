@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/lab3")
 public class Lab3Controller {
@@ -32,7 +35,8 @@ public class Lab3Controller {
 
     @PostMapping("/findSmthUsers")
     public String findSmthUsers(@RequestParam String sql, Model model) {
-        model.addAttribute("findedSmthUsers", lab3UserRepository.findSmthUsers(sql));
+        List<Map<String, Object>> result = lab3UserRepository.findSmthUsers(sql);
+        model.addAttribute("resultTable", result);
         return "lab3/statement";
     }
 
