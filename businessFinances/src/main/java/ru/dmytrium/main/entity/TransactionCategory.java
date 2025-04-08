@@ -26,6 +26,10 @@ public class TransactionCategory {
     @Column(name = "category_name")
     private String categoryName;
 
+    @ManyToOne
+    @JoinColumn(name = "type_name")
+    private InOutType type;
+
     @Column(name = "created_at")
     private Date createdAt;
 }

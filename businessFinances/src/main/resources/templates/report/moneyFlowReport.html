@@ -120,19 +120,19 @@
             <tbody>
             <tr>
                 <td th:text="${summaryReport.name}"></td>
-                <td th:text="${summaryReport.inTotal}"></td>
-                <td th:text="${summaryReport.outTotal}" th:class="${summaryReport.outTotal < 0 ? 'negative' : ''}"></td>
-                <td th:text="${summaryReport.inTotal + summaryReport.outTotal}"
+                <td th:text="${summaryReport.inTotal + ' руб.'}"></td>
+                <td th:text="${summaryReport.outTotal + ' руб.'}" th:class="${summaryReport.outTotal < 0 ? 'negative' : ''}"></td>
+                <td th:text="${summaryReport.inTotal + summaryReport.outTotal + ' руб.'}"
                     th:class="${(summaryReport.inTotal + summaryReport.outTotal) < 0 ? 'negative' : ''}"></td>
             </tr>
             <tr th:each="item : ${moneyFlowReport}">
                 <td th:text="${item.category.categoryName}"></td>
 
-                <td th:if="${item.amountSum >= 0}" th:text="${item.amountSum}"></td>
+                <td th:if="${item.amountSum >= 0}" th:text="${item.amountSum + ' руб.'}"></td>
                 <td th:if="${item.amountSum < 0}"></td>
 
                 <td th:if="${item.amountSum >= 0}"></td>
-                <td th:if="${item.amountSum < 0}" th:text="${item.amountSum}" th:class="negative"></td>
+                <td th:if="${item.amountSum < 0}" th:text="${item.amountSum + ' руб.'}" th:class="negative"></td>
 
                 <td></td>
             </tr>

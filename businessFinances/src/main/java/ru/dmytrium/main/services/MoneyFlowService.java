@@ -11,13 +11,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class MoneyFlowService {
 
     @Autowired
-    TransactionRepository transactionRepository;
+    private TransactionRepository transactionRepository;
+
+    @Autowired
+    private InOutService inOutService;
 
     public List<MoneyFlow> buildMoneyFlowReport(Business business, Date start, Date end) {
         List<MoneyFlow> moneyFlowReport = new ArrayList<>();
@@ -27,7 +29,11 @@ public class MoneyFlowService {
             MoneyFlow moneyFlow = new MoneyFlow();
 
             moneyFlow.setCategory((TransactionCategory) objects[0]);
-            moneyFlow.setAmountSum((BigDecimal) objects[1]);
+            if (inOutService.isIncome(moneyFlow.getCategory().getType())) {
+                moneyFlow.setAmountSum((BigDecimal) objects[1]);
+            } else {
+                moneyFlow.setAmountSum(((BigDecimal) objects[1]).multiply(new BigDecimal(-1)));
+            }
 
             moneyFlowReport.add(moneyFlow);
         }

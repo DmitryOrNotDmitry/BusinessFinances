@@ -1,8 +1,6 @@
 package ru.dmytrium.main.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,9 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import ru.dmytrium.main.entity.*;
 import ru.dmytrium.main.repo.AccountRepository;
 import ru.dmytrium.main.repo.AgentRepository;
+import ru.dmytrium.main.repo.InOutTypeRepository;
 import ru.dmytrium.main.repo.TransactionCategoryRepository;
 
 import java.util.List;
+import java.util.Scanner;
 
 @Controller
 @RequestMapping("/businesses/{businessId}/config")
@@ -27,6 +27,9 @@ public class BusinessConfigController {
     @Autowired
     private TransactionCategoryRepository categoryRepository;
 
+    @Autowired
+    private InOutTypeRepository inOutTypeRepository;
+
     @GetMapping()
     public String businessConfigPage(@SessionAttribute(name = "selectedBusiness") Business business,
                                      Model model) {
@@ -38,6 +41,9 @@ public class BusinessConfigController {
 
         List<TransactionCategory> categories = categoryRepository.findAllByForBusiness(business);
         model.addAttribute("categories", categories);
+
+        List<InOutType> obligationTypes = inOutTypeRepository.findAll();
+        model.addAttribute("types", obligationTypes);
 
         Agent newAgent = new Agent();
         model.addAttribute("newAgent", newAgent);

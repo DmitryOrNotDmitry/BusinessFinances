@@ -9,25 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import ru.dmytrium.main.entity.Business;
-import ru.dmytrium.main.entity.Obligation;
 import ru.dmytrium.main.entity.reports.Metric;
-import ru.dmytrium.main.repo.ObligationRepository;
 import ru.dmytrium.main.services.MetricsService;
-import ru.dmytrium.main.services.ObligationService;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/businesses/{businessId}/metrics")
 public class MetricsController {
-
-    @Autowired
-    private ObligationService obligationService;
 
     @Autowired
     private MetricsService metricsService;

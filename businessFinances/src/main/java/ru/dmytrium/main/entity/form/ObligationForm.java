@@ -2,18 +2,17 @@ package ru.dmytrium.main.entity.form;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.dmytrium.main.entity.ObligationType;
-import ru.dmytrium.main.entity.Transaction;
+import ru.dmytrium.main.entity.InOutType;
 
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Data
 public class ObligationForm {
 
-    private ObligationType type;
+    private InOutType type;
     private String description;
-    private List<Transaction> transactions;
+    private BigDecimal amount;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date dueDate;

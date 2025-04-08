@@ -179,7 +179,7 @@
                 <td th:text="${transaction.description}"></td>
                 <td th:text="${transaction.agent.agentName}"></td>
                 <td th:text="${transaction.account.accountName}"></td>
-                <td th:text="${#numbers.formatDecimal(transaction.amount, 1, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${#numbers.formatDecimal(transaction.amount, 1, 'COMMA', 2, 'POINT') + ' руб.'}"></td>
                 <td th:text="${transaction.transactionDate}"></td>
                 <td>
                     <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/transaction/delete'}" method="post">

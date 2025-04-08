@@ -215,6 +215,12 @@
                     <label for="categoryName">Название категории</label>
                     <input type="text" id="categoryName" th:field="*{categoryName}" required>
                 </div>
+                <div class="form-input-container">
+                    <label for="type">Тип</label>
+                    <select th:field="*{type}">
+                        <option th:each="type : ${types}" th:value="${type.shortName}" th:text="${type.fullName}"></option>
+                    </select>
+                </div>
                 <button type="submit">Добавить</button>
             </form>
         </div>
@@ -226,12 +232,14 @@
                 <tr>
                     <th>ID</th>
                     <th>Название</th>
+                    <th>Тип</th>
                     <th>Автор</th>
                     <th>Действие</th>
                 </tr>
                 <tr th:each="category : ${categories}">
                     <td th:text="${category.categoryId}"></td>
                     <td th:text="${category.categoryName}"></td>
+                    <td th:text="${category.type.fullName}"></td>
                     <td th:text="${category.author.name}"></td>
                     <td>
                         <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/config/category/delete'}" method="post">
