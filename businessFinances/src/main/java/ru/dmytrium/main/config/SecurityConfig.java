@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import ru.dmytrium.main.repo.InvolveBusinessRepository;
-import ru.dmytrium.main.repo.RoleRepository;
 import ru.dmytrium.main.services.BusinessService;
 import ru.dmytrium.main.services.RoleService;
 

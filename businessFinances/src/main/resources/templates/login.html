@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,8 +64,8 @@
 <div class="container">
     <h1>Вход</h1>
     <form action="/login" method="post">
-        <input type="text" placeholder="Логин" required id="username" name="username" value="user">
-        <input type="password" placeholder="Пароль" required id="password" name="password">
+        <input class="login-input" type="text" placeholder="Логин" required id="username" name="username" value="user">
+        <input class="login-input" type="password" placeholder="Пароль" required id="password" name="password">
         <button type="submit" class="btn btn-login">Войти</button>
     </form>
 </div>

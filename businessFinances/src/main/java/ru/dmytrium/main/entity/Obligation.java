@@ -3,6 +3,7 @@ package ru.dmytrium.main.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -16,8 +17,15 @@ public class Obligation {
     private Long obligationId;
 
     @ManyToOne
+    @JoinColumn(name = "business_id")
+    private Business business;
+
+    @Column(name = "amount")
+    private BigDecimal amount;
+
+    @ManyToOne
     @JoinColumn(name = "type_name")
-    private ObligationType type;
+    private InOutType type;
 
     @Column(name = "description")
     private String description;

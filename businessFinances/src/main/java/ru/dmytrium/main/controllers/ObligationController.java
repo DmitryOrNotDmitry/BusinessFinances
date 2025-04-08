@@ -1,19 +1,17 @@
 package ru.dmytrium.main.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.dmytrium.main.entity.*;
+import ru.dmytrium.main.entity.Business;
+import ru.dmytrium.main.entity.InOutType;
+import ru.dmytrium.main.entity.Obligation;
 import ru.dmytrium.main.entity.form.ObligationForm;
-import ru.dmytrium.main.repo.*;
-import ru.dmytrium.main.services.ObligationService;
+import ru.dmytrium.main.repo.InOutTypeRepository;
+import ru.dmytrium.main.repo.ObligationRepository;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/businesses/{businessId}/obligation")
@@ -23,38 +21,7 @@ public class ObligationController {
     private ObligationRepository obligationRepository;
 
     @Autowired
-    private ObligationTypeRepository obligationTypeRepository;
-
-    @Autowired
-    private TransactionRepository transactionRepository;
-
-    @Autowired
-    private ConsideringRepository consideringRepository;
-
-    @Autowired
-    private ObligationService obligationService;
-
-    private Map<Obligation, String> calcTransactionsToString(List<Obligation> obligations) {
-        Map<Obligation, String> strings = new HashMap<>();
-
-        for (Obligation o : obligations) {
-            List<Considering> considerings = consideringRepository.findAllByObligation(o);
-            StringBuilder s = new StringBuilder();
-            for (Considering c : considerings) {
-                s.append(c.getTransaction().getDescription())
-                        .append(", ");
-            }
-
-            if (!s.isEmpty()) {
-                s.deleteCharAt(s.length() - 1);
-                s.deleteCharAt(s.length() - 1);
-            }
-
-            strings.put(o, s.toString());
-        }
-
-        return strings;
-    }
+    private InOutTypeRepository inOutTypeRepository;
 
     @GetMapping
     public String obligationCreatePage(@SessionAttribute(name = "selectedBusiness") Business business,
@@ -64,15 +31,8 @@ public class ObligationController {
         List<Obligation> obligations = obligationRepository.findAllByBusiness(business);
         model.addAttribute("obligations", obligations);
 
-        List<Transaction> transactions = transactionRepository
-                .findRecentTransactionsByBusiness(business, PageRequest.of(0, 20));
-        model.addAttribute("transactions", transactions);
-
-        List<ObligationType> obligationTypes = obligationTypeRepository.findAll();
+        List<InOutType> obligationTypes = inOutTypeRepository.findAll();
         model.addAttribute("types", obligationTypes);
-
-        model.addAttribute("amountsSum", obligationService.calcAmountsSum(obligations));
-        model.addAttribute("transactionsString", calcTransactionsToString(obligations));
 
         model.addAttribute("selectedBusiness", business);
 
@@ -87,14 +47,10 @@ public class ObligationController {
         obligation.setDescription(obligationForm.getDescription());
         obligation.setType(obligationForm.getType());
         obligation.setDueDate(obligationForm.getDueDate());
-        obligation = obligationRepository.save(obligation);
+        obligation.setAmount(obligationForm.getAmount());
+        obligation.setBusiness(selectedBusiness);
 
-        for (Transaction t : obligationForm.getTransactions()) {
-            Considering considering = new Considering();
-            considering.setObligation(obligation);
-            considering.setTransaction(t);
-            consideringRepository.save(considering);
-        }
+        obligationRepository.save(obligation);
 
         return String.format("redirect:/businesses/%d/obligation", selectedBusiness.getBusinessId());
     }

@@ -1,0 +1,252 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+.sidebarContainer {
+    width: 15%;
+    height: 100%;
+}
+.contentContainer {
+    width: 85%;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow-y: auto;
+}
+h1 {
+    text-align: center;
+    color: #10403B;
+    background: #BFBFBF;
+    margin: 0;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+th {
+    background-color: #f4f4f4;
+}
+.date-form {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.date-form label {
+    margin-right: 10px;
+}
+.date-form input {
+    padding: 8px;
+    background: #FFFFFF;
+    font-size: 14px;
+}
+.generate-report-btn {
+    padding: 10px 20px;
+    background-color: #10403B;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+.generate-report-btn:hover {
+    background-color: #0a2c26;
+}
+.date-range {
+    margin: 20px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+.highlight-date {
+    color: #2d9cdb;
+}
+.negative {
+    color: red;
+    font-weight: bold;
+}
+.report-container {
+    padding: 20px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.btn-login {
+    background: #127369;
+    color: #BFBFBF;
+}
+.btn-login:hover {
+    background: #10403B;
+}
+.btn-register {
+    background: #8AA6A3;
+    color: #10403B;
+}
+.btn-register:hover {
+    background: #4C5958;
+}
+
+.container {
+    background: rgba(16, 64, 59, 0.95);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.btn-login {
+    background: #127369;
+    color: #BFBFBF;
+}
+.btn-login:hover {
+    background: #10403B;
+}
+.additionRef {
+    margin-top: 10px;
+    color: #10403B;
+}
+
+.form-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    height: auto;
+    justify-content: space-between;
+}
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-input-container {
+    display: flex;
+    flex-flow: row;
+    width: 300px;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.form-input-container label {
+    font-size: 14px;
+    color: #333;
+    margin-right: 6px;
+}
+.form-input-container select, .form-input-container input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    background: #FFFFFF;
+    border-radius: 4px;
+}
+.form-container button {
+    padding: 10px 20px;
+    background-color: #127369;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: auto;
+}
+.form-container button:hover {
+    background-color: #0f5a47;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f4f4f4;
+}
+.capture {
+    margin-top: 20px;
+}
+table tr:hover {
+    background-color: #f0f0f0;
+}
+.delete_button {
+    background: #ff0000;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.2s;
+}
+.delete_button:hover {
+    background: #cc0000;
+}
+table td:last-child, table th:last-child {
+    width: 200px;
+    min-width: 150px;
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.table-container {
+    padding: 20px;
+}
+.login-input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #8AA6A3;
+    border-radius: 5px;
+    background: #BFBFBF;
+    color: #10403B;
+}
+
+input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    background: #FFFFFF;
+    border-radius: 4px;
+}
+
+.contentContainer h1, .contentContainer .capture {
+    text-align: center;
+    color: #10403B;
+    background: #BFBFBF;
+    padding: 10px;
+    margin: 0;
+    margin-bottom: 20px;
+}

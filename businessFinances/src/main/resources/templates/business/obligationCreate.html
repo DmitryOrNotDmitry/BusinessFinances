@@ -4,157 +4,7 @@
     <meta charset="UTF-8">
     <title th:text="${selectedBusiness.businessName} + ' - Обязательства'"></title>
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            min-height: 100vh;
-        }
-        .sidebarContainer {
-            width: 15%;
-            height: 100%;
-        }
-        .contentContainer {
-            width: 85%;
-            height: 100%;
-            background-color: #FFFFFF;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        h1 {
-            text-align: center;
-            color: #10403B;
-            background: #BFBFBF;
-            margin: 0;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        .form-container {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            height: auto;
-            justify-content: space-between;
-        }
-        .form-container form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .form-input-container {
-            display: flex;
-            flex-flow: row;
-            width: 300px;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        .form-input-container label {
-            font-size: 14px;
-            color: #333;
-            margin-right: 6px;
-        }
-        .form-input-container input, .form-input-container select {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 100%;
-        }
-        .transaction-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-        }
-        .form-container button {
-            padding: 10px 20px;
-            background-color: #127369;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .form-container button:hover {
-            background-color: #0f5a47;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        table tr:hover {
-            background-color: #f0f0f0;
-        }
-        .table-container {
-            padding: 20px;
-        }
-        .transaction-list {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            margin: 10px 0;
-        }
-
-        .transaction-list label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .transaction-list select {
-            width: 100%;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-            font-size: 14px;
-            height: 250px;
-        }
-
-        .transaction-list select:focus {
-            border-color: #007bff;
-            outline: none;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-        .delete_button {
-            background: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: 0.2s;
-        }
-        .delete_button:hover {
-            background: #cc0000;
-        }
-        table td:last-child, table th:last-child {
-            width: 200px;
-            min-width: 150px;
-            max-width: 300px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .table-container {
-            padding: 20px;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
 </head>
 <body>
 <div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>
@@ -167,18 +17,16 @@
             <div class="form-input-container">
                 <label for="type">Тип</label>
                 <select th:field="*{type}">
-                    <option th:each="type : ${types}" th:value="${type.shortName}" th:text="${type.obligTypeName}"></option>
+                    <option th:each="type : ${types}" th:value="${type.shortName}" th:text="${type.fullName}"></option>
                 </select>
+            </div>
+            <div class="form-input-container">
+                <label for="amount">Сумма</label>
+                <input type="number" id="amount" th:field="*{amount}" step="0.01" placeholder="Введите сумму" required>
             </div>
             <div class="form-input-container">
                 <label for="description">Описание</label>
                 <input type="text" id="description" th:field="*{description}" placeholder="Введите описание" required>
-            </div>
-            <div class="transaction-list" id="transactionList">
-                <label>Добавить транзакции:</label>
-                <select th:field="*{transactions}" multiple>
-                    <option th:each="transaction : ${transactions}" th:value="${transaction.transactionCode}" th:text="${transaction.description}"></option>
-                </select>
             </div>
             <div class="form-input-container">
                 <label for="date">Дата</label>
@@ -196,17 +44,15 @@
                 <th>Тип</th>
                 <th>Описание</th>
                 <th>Сумма</th>
-                <th>Связанные транзакции</th>
                 <th>Дата</th>
                 <th>Действие</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="obligation : ${obligations}">
-                <td th:text="${obligation.type.obligTypeName}"></td>
+                <td th:text="${obligation.type.fullName}"></td>
                 <td th:text="${obligation.description}"></td>
-                <td th:text="${#numbers.formatDecimal(amountsSum.get(obligation), 1, 'COMMA', 2, 'POINT')}"></td>
-                <td th:text="${transactionsString.get(obligation)}"></td>
+                <td th:text="${#numbers.formatDecimal(obligation.amount, 1, 'COMMA', 2, 'POINT') + ' руб.'}"></td>
                 <td th:text="${obligation.dueDate}"></td>
                 <td>
                     <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/obligation/delete'}" method="post">
