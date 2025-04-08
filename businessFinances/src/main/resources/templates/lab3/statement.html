@@ -60,21 +60,20 @@
     <input id="sql" placeholder="Enter SQL" type="text" th:name="sql"/>
     <input type="submit" value="Find User">
 </form>
-<table class="table table-striped caption-top">
+
+<div th:if="${#lists.isEmpty(resultTable) or resultTable == null}">
+    <p>Нет результатов для вашего запроса.</p>
+</div>
+
+<table class="table table-striped caption-top" th:unless="${#lists.isEmpty(resultTable) or resultTable == null}">
     <thead>
     <tr>
-        <th>Id</th>
-        <th>Login</th>
-        <th>Name</th>
-        <th>Role</th>
+        <th th:each="entry : ${resultTable[0]}" th:text="${entry.key}">Column Name</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="i : ${findedSmthUsers}">
-        <td th:text="${i.userId}">Id</td>
-        <td th:text="${i.name}">Login</td>
-        <td th:text="${i.email}">Name</td>
-        <td th:text="${i.createdAt}">Role</td>
+    <tr th:each="row : ${resultTable}">
+        <td th:each="entry : ${row}" th:text="${entry.value}">Data</td>
     </tr>
     </tbody>
 </table>
