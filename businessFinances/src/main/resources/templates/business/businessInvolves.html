@@ -4,97 +4,11 @@
     <meta charset="UTF-8">
     <title th:text="${selectedBusiness.businessName} + ' - Участники'"></title>
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/general.css}">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            height: 100vh;
-        }
-        .sidebarContainer {
-            width: 15%;
-            height: 100%;
-        }
-        .contentContainer {
-            width: 85%;
-            height: 100%;
-            background-color: #FFFFFF;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        h1 {
-            text-align: center;
-            color: #10403B;
-            background: #BFBFBF;
-            margin: 0;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        .business-info {
-            padding: 20px;
-        }
-        .table-container {
-            margin-top: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .form-container {
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            display: flex;
-            flex-flow: column;
-            align-items: center;
-        }
-        .form-container form {
-            max-width: 300px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .form-container label {
-            font-weight: bold;
-        }
-        .form-container input, .form-container select, .form-container button {
-            padding: 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .form-container button {
-            background-color: #127369;
-            color: white;
-            cursor: pointer;
-        }
-        .form-container button:hover {
-            background-color: #0f5a47;
-        }
-        .delete_button {
-        background: #ff4d4d;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        cursor: pointer;
-        border-radius: 4px;
-        transition: 0.2s;
-        }
-
-        .delete_button:hover {
-            background: #cc0000;
-        }
         td:nth-child(3), th:nth-child(3) {
             width: 150px;
         }
-
     </style>
 </head>
 <body>
@@ -107,13 +21,17 @@
         <div class="form-container">
             <h3>Добавить участника</h3>
             <form th:action="@{/businesses} + '/' + ${selectedBusiness.businessId} + '/participant'" method="post" th:object="${addRoleTraits}">
-                <label for="login">Логин пользователя:</label>
-                <input type="text" th:field="*{login}" placeholder="Введите логин" required>
+                <div class="form-input-container">
+                    <label for="login">Логин пользователя:</label>
+                    <input type="text" th:field="*{login}" placeholder="Введите логин" required>
+                </div>
 
-                <label for="role">Роль:</label>
-                <select id="role" name="role" th:field="*{role}" value="2" required>
-                    <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
-                </select>
+                <div class="form-input-container">
+                    <label for="role">Роль:</label>
+                    <select id="role" name="role" th:field="*{role}" value="2" required>
+                        <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
+                    </select>
+                </div>
 
                 <button type="submit">Добавить</button>
             </form>

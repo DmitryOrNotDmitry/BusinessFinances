@@ -64,10 +64,10 @@
 <div class="container">
   <h1>Регистрация</h1>
   <form action="/register" method="post" th:object="${registrationForm}">
-    <input type="text" placeholder="Логин" required th:field="*{login}">
-    <input type="email" placeholder="Email" th:field="*{email}">
-    <input type="password" placeholder="Пароль" required th:field="*{password}">
-    <input type="password" placeholder="Повторите пароль" required th:field="*{repeatedPassword}">
+    <input class="login-input" type="text" placeholder="Логин" required th:field="*{login}">
+    <input class="login-input" type="email" placeholder="Email" th:field="*{email}">
+    <input class="login-input" type="password" placeholder="Пароль" required th:field="*{password}">
+    <input class="login-input" type="password" placeholder="Повторите пароль" required th:field="*{repeatedPassword}">
     <button type="submit" class="btn btn-register">Зарегистрироваться</button>
   </form>
 </div>

@@ -4,78 +4,7 @@
   <meta charset="UTF-8">
   <title th:text="${selectedBusiness.businessName} + ' - Настройки'"></title>
   <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-  <style>
-    body {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        height: 100vh;
-    }
-    .sidebarContainer {
-        width: 15%;
-        height: 100%;
-    }
-    .contentContainer {
-        width: 85%;
-        height: 100%;
-        background-color: #FFFFFF;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    h1 {
-        text-align: center;
-        color: #10403B;
-        background: #BFBFBF;
-        margin: 0;
-        padding: 10px;
-        margin-bottom: 20px;
-    }
-    .form-container {
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        height: auto;
-        justify-content: space-between;
-    }
-    .form-container form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .form-input-container {
-        display: flex;
-        flex-flow: row;
-        width: 300px;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-        margin-bottom: 10px;
-    }
-    .form-input-container label {
-        font-size: 14px;
-        color: #333;
-        margin-right: 6px;
-    }
-    .form-input-container input {
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-    .form-container button {
-        padding: 10px 20px;
-        background-color: #127369;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-top: auto;
-    }
-    .form-container button:hover {
-        background-color: #0f5a47;
-    }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/general.css}">
 </head>
 <body>
 <div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>

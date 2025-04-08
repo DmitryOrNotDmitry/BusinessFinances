@@ -4,86 +4,8 @@
     <meta charset="UTF-8">
     <title th:text="${selectedBusiness.businessName} + ' - Метрики о прибыли'"></title>
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/general.css}">
     <script th:src="@{/js/inputCurrentDates.js}"></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            min-height: 100vh;
-            background-color: #f8f9fa;
-        }
-        .sidebarContainer {
-            width: 15%;
-            height: 100%;
-        }
-        .contentContainer {
-            width: 85%;
-            background: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            overflow-y: auto;
-        }
-        h1 {
-            text-align: center;
-            color: #10403B;
-            background: #BFBFBF;
-            margin: 0;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .date-form {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .date-form label {
-            margin-right: 10px;
-        }
-        .date-form input {
-            padding: 8px;
-            font-size: 14px;
-        }
-        .generate-report-btn {
-            padding: 10px 20px;
-            background-color: #10403B;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .generate-report-btn:hover {
-            background-color: #0a2c26;
-        }
-        .date-range {
-            margin: 20px 0;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .highlight-date {
-            color: #2d9cdb;
-        }
-        .negative {
-            color: red;
-            font-weight: bold;
-        }
-        .report-container {
-            padding: 20px;
-        }
-    </style>
 </head>
 <body>
 <div class="sidebarContainer" th:insert="~{sidebar::sidebar}"></div>
