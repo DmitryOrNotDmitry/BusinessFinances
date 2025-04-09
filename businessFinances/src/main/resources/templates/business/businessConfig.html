@@ -11,7 +11,6 @@
 <div class="contentContainer">
     <h1>Конфигурация бизнеса</h1>
 
-
     <section>
         <h2 class="capture">Контрагенты</h2>
         <div class="form-container">
@@ -54,10 +53,6 @@
         <div class="form-container">
             <form th:action="@{'/businesses/' + ${selectedBusiness.businessId} + '/config/account'}" method="post" th:object="${newAccount}">
                 <div class="form-input-container">
-                    <label for="bankName">Банк</label>
-                    <input type="text" id="bankName" th:field="*{bankName}" required>
-                </div>
-                <div class="form-input-container">
                     <label for="accountName">Имя счета</label>
                     <input type="text" id="accountName" th:field="*{accountName}" required>
                 </div>
@@ -75,7 +70,6 @@
             <table>
                 <tr>
                     <th>ID</th>
-                    <th>Банк</th>
                     <th>Имя счета</th>
                     <th>Описание</th>
                     <th>Автор</th>
@@ -83,7 +77,6 @@
                 </tr>
                 <tr th:each="account : ${accounts}">
                     <td th:text="${account.accountCode}"></td>
-                    <td th:text="${account.bankName}"></td>
                     <td th:text="${account.accountName}"></td>
                     <td th:text="${account.description}"></td>
                     <td th:text="${account.author.name}"></td>

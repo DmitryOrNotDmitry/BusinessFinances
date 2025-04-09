@@ -23,9 +23,6 @@ public class Account {
     @JoinColumn(name = "for_business_id")
     private Business forBusiness;
 
-    @Column(name = "bank_name")
-    private String bankName;
-
     @Column(name = "account_name")
     private String accountName;
 
